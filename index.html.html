@@ -1,0 +1,2187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S&P · Philippines 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ocean:#0ea5e9; --ocean-dark:#0369a1; --ocean-light:#bae6fd;
+  --foam:#e0f7ff; --sand:#fef3c7; --sand-dark:#f59e0b;
+  --coral:#fb7185; --leaf:#34d399; --leaf-dark:#059669;
+  --glass:rgba(255,255,255,0.55); --glass-border:rgba(255,255,255,0.75);
+  --text:#0c2340; --text-soft:#2e5f8a; --text-muted:#64a0c8;
+  --sh-blue:0 4px 24px rgba(14,165,233,0.18),0 1.5px 6px rgba(14,165,233,0.10);
+  --sh-card:0 8px 32px rgba(14,165,233,0.13),0 2px 8px rgba(0,0,0,0.06);
+  --pp:#059669; --pp-light:#d1fae5; --pp-mid:#34d399;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',sans-serif;min-height:100vh;color:var(--text);overflow-x:hidden}
+
+/* ── PAGE BG per section ── */
+body.bg-home   {background:linear-gradient(160deg,#c7eeff 0%,#e0f7ff 30%,#f0fbff 55%,#fef9ee 80%,#fde8f0 100%)}
+body.bg-manila {background:linear-gradient(160deg,#c7eeff 0%,#e0f7ff 30%,#f0fbff 55%,#fef9ee 80%,#fde8f0 100%)}
+body.bg-pp     {background:linear-gradient(160deg,#c7f2e0 0%,#d1fae5 25%,#e0f7ff 55%,#f0fbff 80%,#fef9ee 100%)}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 600px 400px at 10% 15%,rgba(14,165,233,0.12) 0%,transparent 70%),
+             radial-gradient(ellipse 500px 350px at 90% 80%,rgba(52,211,153,0.10) 0%,transparent 70%),
+             radial-gradient(ellipse 400px 300px at 60% 5%,rgba(251,113,133,0.07) 0%,transparent 70%)}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.72);backdrop-filter:blur(18px) saturate(1.8);border-bottom:1.5px solid var(--glass-border);padding:0 20px;display:flex;align-items:center;gap:0;box-shadow:0 2px 20px rgba(14,165,233,0.10)}
+.nav-brand{font-family:'Nunito',sans-serif;font-weight:900;font-size:17px;color:var(--ocean-dark);text-decoration:none;padding:14px 0;margin-right:20px;letter-spacing:-0.3px;display:flex;align-items:center;gap:7px;flex-shrink:0;cursor:pointer}
+.nav-links{display:flex;align-items:center;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:var(--text-soft);padding:8px 13px;border-radius:20px;white-space:nowrap;transition:all 0.18s;display:flex;align-items:center;gap:5px;cursor:pointer;border:none;background:transparent}
+.nav-link:hover{background:var(--foam);color:var(--ocean-dark)}
+.nav-link.active-manila{background:linear-gradient(135deg,var(--ocean) 0%,#38bdf8 100%);color:white;box-shadow:0 2px 12px rgba(14,165,233,0.35)}
+.nav-link.active-pp{background:linear-gradient(135deg,var(--pp) 0%,var(--pp-mid) 100%);color:white;box-shadow:0 2px 12px rgba(5,150,105,0.35)}
+.nav-link.active-elnido{background:linear-gradient(135deg,#0891b2 0%,#22d3ee 100%);color:white;box-shadow:0 2px 12px rgba(8,145,178,0.35)}
+.nav-link.active-coron{background:linear-gradient(135deg,#9d174d 0%,#db2777 100%);color:white;box-shadow:0 2px 12px rgba(157,23,77,0.35)}
+.nav-link.active-cebu{background:linear-gradient(135deg,#d97706 0%,#fbbf24 100%);color:#78350f;box-shadow:0 2px 12px rgba(217,119,6,0.35)}
+.nav-link.active-checklist{background:linear-gradient(135deg,#059669 0%,#34d399 100%);color:white;box-shadow:0 2px 12px rgba(16,185,129,0.35)}
+.nav-link.active-home{background:linear-gradient(135deg,var(--ocean) 0%,var(--leaf) 100%);color:white;box-shadow:0 2px 12px rgba(14,165,233,0.3)}
+.nav-link.locked{opacity:0.38;cursor:default}
+.nav-link.locked:hover{background:transparent;color:var(--text-soft)}
+
+/* ── PAGES ── */
+.page{display:none;position:relative;z-index:1}
+.page.active{display:block}
+
+/* ── SHARED LAYOUT ── */
+.hero{padding:52px 24px 40px;max-width:860px;margin:0 auto}
+.content{max-width:860px;margin:0 auto;padding:0 24px 60px}
+.section-title{font-family:'Nunito',sans-serif;font-weight:900;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:36px 0 14px;display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,var(--ocean-light) 0%,transparent 100%);border-radius:1px}
+.section-title.pp-accent::after{background:linear-gradient(90deg,rgba(5,150,105,0.3) 0%,transparent 100%)}
+
+/* ── HERO ── */
+.hero-eyebrow{display:inline-flex;align-items:center;gap:7px;background:var(--glass);border:1.5px solid var(--glass-border);border-radius:99px;padding:5px 14px 5px 8px;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;margin-bottom:18px;backdrop-filter:blur(10px);box-shadow:var(--sh-blue)}
+.hero h1{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(36px,8vw,62px);line-height:1.05;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px}
+.hero h1 .grad-blue{background:linear-gradient(135deg,var(--ocean) 0%,#06b6d4 50%,var(--leaf) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero h1 .grad-pp{background:linear-gradient(135deg,var(--pp) 0%,var(--ocean) 60%,var(--pp-mid) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:16px;color:var(--text-soft);line-height:1.6;max-width:540px;margin-bottom:28px}
+.hero-stats{display:flex;gap:12px;flex-wrap:wrap}
+.hero-stat{background:var(--glass);border:1.5px solid var(--glass-border);border-radius:16px;padding:10px 18px;backdrop-filter:blur(12px);box-shadow:var(--sh-blue);display:flex;align-items:center;gap:8px}
+.hero-stat .icon{font-size:18px}
+.hero-stat-val{font-size:15px;font-weight:800;color:var(--text);display:block;line-height:1.2;font-family:'Nunito',sans-serif}
+.hero-stat-lbl{font-size:11px;color:var(--text-muted);font-weight:600}
+
+/* ── FLIGHT CARD ── */
+.flight-card{background:linear-gradient(135deg,rgba(14,165,233,0.11) 0%,rgba(56,189,248,0.07) 100%);border:1.5px solid rgba(14,165,233,0.26);border-radius:20px;padding:20px 22px;backdrop-filter:blur(14px);box-shadow:var(--sh-card);margin-bottom:12px}
+.flight-card.pp-card{background:linear-gradient(135deg,rgba(5,150,105,0.10) 0%,rgba(14,165,233,0.07) 100%);border-color:rgba(5,150,105,0.25)}
+.flight-route{display:flex;align-items:center;margin-bottom:14px}
+.flight-stop{text-align:center}
+.flight-stop .code{font-family:'Nunito',sans-serif;font-weight:900;font-size:22px;letter-spacing:-0.5px}
+.code-blue{color:var(--ocean-dark)}
+.code-pp{color:var(--pp)}
+.flight-stop .time{font-size:13px;font-weight:700;color:var(--text);margin-top:1px}
+.flight-stop .city{font-size:11px;color:var(--text-muted);margin-top:1px}
+.flight-line{flex:1;display:flex;flex-direction:column;align-items:center;padding:0 12px}
+.flight-line .airline{font-size:11px;font-weight:700;color:var(--text-muted);margin-bottom:5px}
+.flight-line .line{width:100%;display:flex;align-items:center;gap:6px}
+.flight-line .line::before,.flight-line .line::after{content:'';flex:1;height:1.5px}
+.line-blue::before,.line-blue::after{background:linear-gradient(90deg,var(--ocean-light),var(--ocean))}
+.line-pp::before,.line-pp::after{background:linear-gradient(90deg,rgba(5,150,105,0.3),var(--pp))}
+.flight-line .plane{font-size:16px}
+.flight-line .dur{font-size:11px;color:var(--text-muted);margin-top:4px}
+.layover-badge{display:flex;align-items:center;gap:8px;background:rgba(245,158,11,0.1);border:1.5px solid rgba(245,158,11,0.3);border-radius:12px;padding:8px 14px;margin:10px 0 0;font-size:12px;font-weight:700;color:#92400e}
+.flight-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.ftag{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;border:1.5px solid}
+.ftag-blue{background:#e0f2fe;border-color:#7dd3fc;color:#0369a1}
+.ftag-amber{background:#fef3c7;border-color:#fcd34d;color:#92400e}
+.ftag-green{background:#d1fae5;border-color:#6ee7b7;color:#065f46}
+
+/* ── STAY / CARDS ── */
+.wishlist-bar{background:rgba(219,234,254,0.35);border:1.5px solid rgba(14,165,233,0.2);border-radius:16px;padding:12px 18px;margin-bottom:14px;font-size:13px;color:var(--text-soft);line-height:1.6}
+.wishlist-bar a{color:var(--ocean-dark);font-weight:700;text-decoration:none}
+.wishlist-bar a:hover{text-decoration:underline}
+.wishlist-url{font-family:monospace;font-size:11px;color:var(--text-muted);word-break:break-all;margin-top:4px;display:block;background:rgba(255,255,255,0.6);padding:6px 10px;border-radius:8px;border:1px solid var(--glass-border)}
+.stay-card{background:var(--glass);border:1.5px solid var(--glass-border);border-radius:20px;padding:20px 22px;backdrop-filter:blur(14px);box-shadow:var(--sh-card);margin-bottom:12px;position:relative}
+.stay-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+.stay-name{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;color:var(--text);margin-bottom:4px}
+.stay-desc{font-size:13px;color:var(--text-soft);line-height:1.55}
+.stay-price{background:linear-gradient(135deg,var(--leaf) 0%,#10b981 100%);color:white;border-radius:12px;padding:8px 14px;text-align:center;flex-shrink:0;box-shadow:0 3px 12px rgba(52,211,153,0.35)}
+.stay-price .amount{font-family:'Nunito',sans-serif;font-weight:900;font-size:17px;display:block}
+.stay-price .per{font-size:11px;opacity:0.85}
+.top-badge{position:absolute;top:-10px;left:16px;background:linear-gradient(135deg,var(--leaf),#10b981);color:white;font-size:11px;font-weight:800;padding:3px 12px;border-radius:99px;box-shadow:0 2px 8px rgba(52,211,153,0.35)}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tag{font-size:11px;font-weight:700;padding:4px 11px;border-radius:99px}
+.tag-ocean{background:#e0f2fe;color:#0369a1}
+.tag-coral{background:#ffe4e6;color:#9f1239}
+.tag-leaf{background:#d1fae5;color:#065f46}
+.tag-sand{background:#fef3c7;color:#92400e}
+.tag-purple{background:#ede9fe;color:#5b21b6}
+
+/* ── ACTIVITY CARDS ── */
+.day-label{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--text);display:flex;align-items:center;gap:9px;margin:20px 0 10px}
+.day-pill{color:white;border-radius:99px;padding:3px 12px;font-size:12px}
+.pill-blue{background:linear-gradient(135deg,var(--ocean) 0%,#38bdf8 100%);box-shadow:0 2px 8px rgba(14,165,233,0.3)}
+.pill-purple{background:linear-gradient(135deg,#a78bfa,#818cf8)}
+.act-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.act-card{background:var(--glass);border:1.5px solid var(--glass-border);border-radius:18px;padding:16px 18px;backdrop-filter:blur(12px);box-shadow:var(--sh-card);transition:transform 0.18s,box-shadow 0.18s;position:relative;overflow:hidden}
+.act-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(14,165,233,0.18)}
+.act-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:18px 18px 0 0}
+.act-card.morning::before{background:linear-gradient(90deg,#fbbf24,#f59e0b)}
+.act-card.afternoon::before{background:linear-gradient(90deg,var(--ocean),#38bdf8)}
+.act-card.evening::before{background:linear-gradient(90deg,#a78bfa,#818cf8)}
+.act-card.night::before{background:linear-gradient(90deg,#1e293b,#334155)}
+.act-icon{font-size:24px;margin-bottom:8px;display:block}
+.act-name{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--text);margin-bottom:5px;line-height:1.3}
+.act-desc{font-size:12px;color:var(--text-soft);line-height:1.55;margin-bottom:10px}
+.act-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.act-time{font-size:11px;font-weight:700;color:var(--text-muted)}
+.act-cost{font-size:11px;font-weight:800;padding:3px 10px;border-radius:99px;background:var(--sand);color:#92400e;border:1.5px solid #fcd34d}
+.span2{grid-column:span 2}
+
+/* ── BUDGET ── */
+.budget-card{border-radius:20px;overflow:hidden;box-shadow:var(--sh-card)}
+.budget-card.blue{background:linear-gradient(135deg,rgba(14,165,233,0.09) 0%,rgba(56,189,248,0.06) 100%);border:1.5px solid rgba(14,165,233,0.2)}
+.budget-card.pp{background:linear-gradient(135deg,rgba(5,150,105,0.09) 0%,rgba(14,165,233,0.07) 100%);border:1.5px solid rgba(5,150,105,0.2)}
+.budget-row{display:flex;justify-content:space-between;align-items:center;padding:11px 20px;border-bottom:1px solid rgba(14,165,233,0.10);font-size:13px}
+.budget-row:last-child{border-bottom:none}
+.budget-row.total{background:rgba(14,165,233,0.09);font-family:'Nunito',sans-serif;font-weight:800;font-size:14px}
+.budget-row.total.pp-total{background:rgba(5,150,105,0.09)}
+.budget-cat{color:var(--text-soft)}
+.budget-row.total .budget-cat{color:var(--text)}
+.budget-amt{font-weight:700;color:var(--text)}
+.budget-note{font-size:11px;color:var(--text-muted);margin-left:6px;font-weight:400}
+
+/* ── TIPS ── */
+.tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tip-card{background:var(--glass);border:1.5px solid var(--glass-border);border-radius:16px;padding:14px 16px;backdrop-filter:blur(12px);font-size:13px;color:var(--text-soft);line-height:1.55}
+.tip-card strong{color:var(--text);font-weight:700;display:block;margin-bottom:4px}
+/* CHECKLIST */
+.cl-group{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
+.cl-item{display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,0.55);border:1.5px solid rgba(16,185,129,0.15);border-radius:14px;padding:12px 14px;cursor:pointer;transition:all 0.18s;backdrop-filter:blur(8px)}
+.cl-item:hover{background:rgba(209,250,229,0.5);border-color:rgba(16,185,129,0.35)}
+.cl-item.cl-done{background:rgba(209,250,229,0.6);border-color:rgba(16,185,129,0.4);opacity:0.75}
+.cl-check{width:22px;height:22px;min-width:22px;border-radius:6px;border:2px solid rgba(16,185,129,0.5);background:white;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#059669;cursor:pointer;transition:all 0.15s;margin-top:1px}
+.cl-item.cl-done .cl-check{background:#059669;border-color:#059669;color:white}
+.cl-check.sm{width:18px;height:18px;min-width:18px;border-radius:5px;font-size:11px}
+.cl-body{flex:1;min-width:0}
+.cl-title{font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:var(--text);margin-bottom:3px;line-height:1.4}
+.cl-title.sm{font-size:12px}
+.cl-sub{font-size:12px;color:var(--text-soft);line-height:1.55}
+.cl-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.clt{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:99px}
+.clt-red{background:rgba(254,226,226,0.8);color:#b91c1c}
+.clt-orange{background:rgba(254,243,199,0.8);color:#92400e}
+.clt-blue{background:rgba(219,234,254,0.8);color:#1e40af}
+.clt-green{background:rgba(209,250,229,0.8);color:#065f46}
+
+/* ── PP SPECIFIC ── */
+.transit-box{background:linear-gradient(135deg,rgba(5,150,105,0.08),rgba(14,165,233,0.06));border:1.5px solid rgba(5,150,105,0.2);border-radius:18px;padding:16px 20px;margin-bottom:12px}
+.transit-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.transit-body{font-size:13px;color:var(--text-soft);line-height:1.65}
+.transit-body strong{color:var(--text);font-weight:700}
+.warn-box{background:rgba(254,243,199,0.7);border:1.5px solid rgba(245,158,11,0.35);border-radius:16px;padding:12px 16px;font-size:13px;color:#92400e;line-height:1.6;margin-bottom:12px}
+.warn-box strong{font-weight:700;color:#78350f}
+.ur-hero{background:linear-gradient(135deg,rgba(5,150,105,0.13) 0%,rgba(14,165,233,0.09) 50%,rgba(52,211,153,0.07) 100%);border:1.5px solid rgba(5,150,105,0.28);border-radius:22px;padding:22px 24px;box-shadow:var(--sh-card);margin-bottom:14px}
+.ur-title{font-family:'Nunito',sans-serif;font-weight:900;font-size:19px;color:var(--text);margin-bottom:6px}
+.ur-badges{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;margin-top:4px}
+.ur-badge{font-size:11px;font-weight:800;padding:3px 11px;border-radius:99px;border:1.5px solid}
+.ub-gold{background:#fef3c7;color:#92400e;border-color:#fcd34d}
+.ub-blue{background:#dbeafe;color:#1e3a8a;border-color:#93c5fd}
+.ub-green{background:#d1fae5;color:#064e3b;border-color:#6ee7b7}
+.ur-body{font-size:13px;color:var(--text-soft);line-height:1.7}
+.ur-body strong{color:var(--text);font-weight:700}
+.timeline{position:relative;padding-left:26px}
+.timeline::before{content:'';position:absolute;left:9px;top:6px;bottom:6px;width:1.5px;background:linear-gradient(to bottom,var(--pp),rgba(14,165,233,0.3))}
+.tl-item{position:relative;margin-bottom:14px}
+.tl-dot{position:absolute;left:-23px;top:13px;width:11px;height:11px;border-radius:50%;border:2px solid white;z-index:1}
+.tl-card{background:var(--glass);border:1.5px solid var(--glass-border);border-radius:16px;padding:13px 16px;backdrop-filter:blur(12px);box-shadow:var(--sh-card)}
+.tl-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:4px}
+.tl-time{font-size:11px;font-weight:800;color:var(--text-muted);white-space:nowrap}
+.tl-name{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--text);flex:1}
+.tl-body{font-size:12px;color:var(--text-soft);line-height:1.55}
+.tl-cost{font-size:11px;font-weight:800;padding:3px 10px;border-radius:99px;background:var(--sand);color:#92400e;border:1.5px solid #fcd34d;white-space:nowrap;display:inline-block;margin-top:6px}
+.tour-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tour-card{background:var(--glass);border:1.5px solid var(--glass-border);border-radius:18px;padding:16px 18px;backdrop-filter:blur(12px);box-shadow:var(--sh-card)}
+.tour-card.top{border-color:rgba(52,211,153,0.45)}
+.tour-label{font-size:11px;font-weight:800;padding:3px 9px;border-radius:99px;background:#d1fae5;color:#064e3b;margin-bottom:8px;display:inline-block}
+.tour-name{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--text);margin-bottom:5px}
+.tour-desc{font-size:12px;color:var(--text-soft);line-height:1.55;margin-bottom:10px}
+.tour-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tour-dur{font-size:11px;font-weight:700;color:var(--text-muted)}
+.tour-price{font-size:11px;font-weight:800;padding:3px 10px;border-radius:99px;background:var(--sand);color:#92400e;border:1.5px solid #fcd34d}
+
+/* ── HOME PAGE ── */
+.hero-home{padding:60px 24px 40px;text-align:center;max-width:860px;margin:0 auto}
+.trip-badge{display:inline-flex;align-items:center;gap:7px;background:var(--glass);border:1.5px solid var(--glass-border);border-radius:99px;padding:5px 18px 5px 10px;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;color:var(--ocean-dark);margin-bottom:20px;backdrop-filter:blur(10px);box-shadow:var(--sh-blue)}
+.home-h1{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(42px,9vw,72px);line-height:1.0;letter-spacing:-2px;color:var(--text);margin-bottom:14px}
+.home-h1 .g{background:linear-gradient(135deg,var(--ocean) 0%,#06b6d4 40%,var(--leaf) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.home-sub{font-size:16px;color:var(--text-soft);line-height:1.6;max-width:500px;margin:0 auto 36px}
+.trip-stats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
+.tstat{background:var(--glass);border:1.5px solid var(--glass-border);border-radius:16px;padding:12px 20px;backdrop-filter:blur(12px);box-shadow:var(--sh-blue);text-align:center}
+.tstat-val{font-family:'Nunito',sans-serif;font-weight:900;font-size:22px;color:var(--text);display:block}
+.tstat-lbl{font-size:11px;color:var(--text-muted);font-weight:600;margin-top:2px}
+.flight-strip{background:linear-gradient(135deg,rgba(14,165,233,0.10) 0%,rgba(56,189,248,0.07) 100%);border:1.5px solid rgba(14,165,233,0.22);border-radius:18px;padding:16px 20px;margin-bottom:36px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;max-width:860px;margin-left:auto;margin-right:auto}
+.flight-strip .icon{font-size:24px;flex-shrink:0}
+.fstrip-text{flex:1}
+.fstrip-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--text);margin-bottom:4px}
+.fstrip-detail{font-size:12px;color:var(--text-soft);line-height:1.5}
+.fstrip-price{background:linear-gradient(135deg,var(--ocean) 0%,#38bdf8 100%);color:white;border-radius:12px;padding:8px 16px;font-family:'Nunito',sans-serif;font-weight:900;font-size:15px;box-shadow:0 3px 12px rgba(14,165,233,0.35);flex-shrink:0}
+.cities-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;max-width:860px;margin:0 auto;padding:0 24px 60px;align-items:center}
+@media(max-width:560px){.cities-grid{grid-template-columns:1fr}}
+.city-card{border-radius:22px;overflow:hidden;border:1.5px solid var(--glass-border);box-shadow:var(--sh-card);text-decoration:none;color:inherit;transition:transform 0.2s,box-shadow 0.2s;display:block;cursor:pointer}
+.city-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(14,165,233,0.22)}
+.city-card.locked{pointer-events:none;opacity:0.75}
+.city-top{padding:24px 22px 18px;display:flex;flex-direction:column;gap:4px}
+.city-number{font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;opacity:0.65;margin-bottom:4px}
+.city-emoji{font-size:36px;margin-bottom:8px;display:block}
+.city-name{font-family:'Nunito',sans-serif;font-weight:900;font-size:24px;letter-spacing:-0.5px}
+.city-dates{font-size:13px;opacity:0.75;font-weight:600;margin-top:2px}
+.city-bottom{padding:14px 22px;background:rgba(255,255,255,0.5);border-top:1px solid rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(8px)}
+.city-tags{display:flex;gap:6px;flex-wrap:wrap}
+.ctag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,0.7);color:var(--text-soft);border:1px solid rgba(255,255,255,0.9)}
+.city-arrow{font-size:18px;opacity:0.5;transition:opacity 0.18s}
+.city-card:hover .city-arrow{opacity:1}
+.coming-soon{font-size:11px;font-weight:800;padding:4px 12px;border-radius:99px;background:rgba(255,255,255,0.5);color:var(--text-muted);border:1px solid rgba(255,255,255,0.8)}
+.card-manila .city-top{background:linear-gradient(135deg,#dbeafe 0%,#bfdbfe 60%,#a5f3fc 100%)}
+.card-manila .city-name{color:#1e3a8a}
+.card-pp .city-top{background:linear-gradient(135deg,#d1fae5 0%,#a7f3d0 60%,#6ee7b7 100%)}
+.card-pp .city-name{color:#064e3b}
+.card-elnido .city-top{background:linear-gradient(135deg,#cffafe 0%,#a5f3fc 60%,#67e8f9 100%)}
+.card-elnido .city-name{color:#164e63}
+.card-coron .city-top{background:linear-gradient(135deg,#fce7f3 0%,#fbcfe8 60%,#f9a8d4 100%)}
+.card-coron .city-name{color:#831843}
+.card-cebu .city-top{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 60%,#fcd34d 100%)}
+.card-cebu .city-name{color:#78350f}
+
+/* ── FOOTER NAV ── */
+.footer-nav{max-width:860px;margin:0 auto;padding:0 24px 40px;display:flex;justify-content:space-between;align-items:center}
+.nav-btn{display:inline-flex;align-items:center;gap:10px;font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;padding:13px 22px;border-radius:99px;border:none;cursor:pointer;transition:transform 0.18s,box-shadow 0.18s}
+.nav-btn:hover{transform:translateY(-2px)}
+.btn-prev{background:rgba(100,160,200,0.2);color:var(--text-soft);border:1.5px solid var(--glass-border)}
+.btn-next-blue{background:linear-gradient(135deg,var(--ocean) 0%,#38bdf8 100%);color:white;box-shadow:0 4px 20px rgba(14,165,233,0.40)}
+.btn-next-blue:hover{box-shadow:0 8px 30px rgba(14,165,233,0.50)}
+.btn-next-pp{background:linear-gradient(135deg,var(--pp) 0%,var(--pp-mid) 100%);color:white;box-shadow:0 4px 20px rgba(5,150,105,0.40)}
+.btn-next-pp:hover{box-shadow:0 8px 30px rgba(5,150,105,0.50)}
+
+/* ── ANIMATIONS ── */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.float{animation:float 3.5s ease-in-out infinite;display:inline-block}
+@media(max-width:560px){.act-grid,.tips-grid,.tour-grid,.cities-grid{grid-template-columns:1fr}.span2{grid-column:span 1}}
+</style>
+</head>
+<body class="bg-home">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand" onclick="showPage('home')">🌴 S&P · Philippines</div>
+  <div class="nav-links">
+    <button class="nav-link" id="nav-manila" onclick="showPage('manila')">✈ Manila</button>
+    <button class="nav-link" id="nav-pp" onclick="showPage('pp')">🌿 Puerto Princesa</button>
+    <button class="nav-link" id="nav-elnido" onclick="showPage('elnido')">🏝 El Nido</button>
+    <button class="nav-link" id="nav-coron" onclick="showPage('coron')">🤿 Coron</button>
+    <button class="nav-link" id="nav-cebu" onclick="showPage('cebu')">🌊 Cebu</button>
+    <button class="nav-link" id="nav-checklist" onclick="showPage('checklist')">✅ Checklist</button>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════
+     HOME PAGE
+════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+  <div class="hero-home">
+    <div class="trip-badge">🌊 Shridhar & Pooja · Philippines Trip Planner</div>
+    <div class="home-h1"><span class="float">🏖</span><br><span class="g">10 days.</span><br>5 islands.</div>
+    <p class="home-sub">Jun 6–15, 2025 · Manila → Puerto Princesa → El Nido → Coron → Cebu. Click any city to dive in.</p>
+    <div class="trip-stats">
+      <div class="tstat"><span class="tstat-val">10</span><span class="tstat-lbl">days</span></div>
+      <div class="tstat"><span class="tstat-val">5</span><span class="tstat-lbl">destinations</span></div>
+      <div class="tstat"><span class="tstat-val">3</span><span class="tstat-lbl">flights in PH</span></div>
+      <div class="tstat"><span class="tstat-val">1</span><span class="tstat-lbl">epic ferry</span></div>
+      <div class="tstat"><span class="tstat-val">∞</span><span class="tstat-lbl">beach time</span></div>
+    </div>
+  </div>
+  <div class="flight-strip" style="padding:0 24px;background:none;border:none;box-shadow:none;margin-bottom:0">
+    <div style="background:linear-gradient(135deg,rgba(14,165,233,0.10),rgba(56,189,248,0.07));border:1.5px solid rgba(14,165,233,0.22);border-radius:18px;padding:16px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;width:100%">
+      <div class="icon">✈</div>
+      <div class="fstrip-text">
+        <div class="fstrip-title">Outbound · AirAsia AK68 + AK582 · HYD → KUL → MNL</div>
+        <div class="fstrip-detail">Depart Hyderabad Sat Jun 6 · 11:55 PM → KUL 7:00 AM (1h 20m layover) → Manila 12:15 PM Sun Jun 7 · Economy · A320 + A321neo</div>
+      </div>
+      <div class="fstrip-price">₹16,508 / pax</div>
+    </div>
+  </div>
+  <div class="flight-strip" style="padding:0 24px;background:none;border:none;box-shadow:none;margin-bottom:0;margin-top:8px">
+    <div style="background:linear-gradient(135deg,rgba(217,119,6,0.10),rgba(251,191,36,0.07));border:1.5px solid rgba(217,119,6,0.22);border-radius:18px;padding:16px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;width:100%">
+      <div class="icon">🏠</div>
+      <div class="fstrip-text">
+        <div class="fstrip-title">Return · Philippines AirAsia Z2 7114 + AirAsia AK 69 · CEB → KUL → HYD</div>
+        <div class="fstrip-detail">Depart Cebu Tue Jun 16 · 12:55 PM → KUL 4:45 PM (4h 40m layover) → Hyderabad 11:15 PM · Economy · A320 both legs</div>
+      </div>
+      <div class="fstrip-price" style="background:linear-gradient(135deg,#d97706,#f59e0b);box-shadow:0 3px 12px rgba(217,119,6,0.35)">₹21,936 / pax</div>
+    </div>
+  </div>
+  <div class="cities-grid" style="margin-top:20px">
+
+    <!-- STOP 1: MANILA -->
+    <div class="city-card card-manila" onclick="showPage('manila')">
+      <div class="city-top"><span class="city-number">Stop 01</span><span class="city-emoji">🏙</span><div class="city-name">Manila</div><div class="city-dates">Jun 7–8 · 1.5 days</div></div>
+      <div class="city-bottom"><div class="city-tags"><span class="ctag">Nightlife</span><span class="ctag">Culture</span><span class="ctag">Shopping</span></div><span class="city-arrow">→</span></div>
+    </div>
+
+    <!-- TRANSIT: MANILA → PP -->
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:6px 4px">
+      <div style="width:1.5px;height:14px;background:rgba(14,165,233,0.3);border-radius:1px"></div>
+      <div style="background:rgba(14,165,233,0.08);border:1.5px solid rgba(14,165,233,0.22);border-radius:12px;padding:7px 10px;text-align:center;min-width:90px">
+        <div style="font-size:14px;margin-bottom:3px">✈</div>
+        <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:10px;color:#0369a1;line-height:1.3">PAL PR 2779</div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:1px">7:25 PM → 8:45 PM</div>
+        <div style="font-size:10px;color:var(--text-muted)">1h 20m · ₹4,870</div>
+      </div>
+      <div style="width:1.5px;height:14px;background:rgba(5,150,105,0.3);border-radius:1px"></div>
+    </div>
+
+    <!-- STOP 2: PUERTO PRINCESA -->
+    <div class="city-card card-pp" onclick="showPage('pp')">
+      <div class="city-top"><span class="city-number">Stop 02</span><span class="city-emoji">🌿</span><div class="city-name">Puerto Princesa</div><div class="city-dates">Jun 8–9 · overnight</div></div>
+      <div class="city-bottom"><div class="city-tags"><span class="ctag">Underground River</span><span class="ctag">Transit</span></div><span class="city-arrow">→</span></div>
+    </div>
+
+    <!-- TRANSIT: PP → EL NIDO (full row) -->
+    <div style="grid-column:span 3;display:flex;align-items:center;justify-content:center;padding:4px 0;gap:10px">
+      <div style="flex:1;height:1.5px;background:linear-gradient(90deg,rgba(5,150,105,0.15),rgba(8,145,178,0.4));border-radius:1px"></div>
+      <div style="background:rgba(8,145,178,0.08);border:1.5px solid rgba(8,145,178,0.22);border-radius:12px;padding:7px 14px;display:flex;align-items:center;gap:10px;white-space:nowrap">
+        <span style="font-size:14px">🚐</span>
+        <div>
+          <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:10px;color:#0e7490">Private van · PP → El Nido</div>
+          <div style="font-size:10px;color:var(--text-muted)">Departs ~4 PM · 5–6h · arrives ~9:30 PM · ₱8,000 total van (~₹6,400)</div>
+        </div>
+      </div>
+      <div style="flex:1;height:1.5px;background:linear-gradient(90deg,rgba(8,145,178,0.4),rgba(8,145,178,0.15));border-radius:1px"></div>
+    </div>
+
+    <!-- STOP 3: EL NIDO -->
+    <div class="city-card card-elnido" onclick="showPage('elnido')" style="cursor:pointer">
+      <div class="city-top"><span class="city-number">Stop 03</span><span class="city-emoji">🏝</span><div class="city-name">El Nido</div><div class="city-dates">Jun 9–12 · 3.5 days</div></div>
+      <div class="city-bottom"><div class="city-tags"><span class="ctag">Lagoons</span><span class="ctag">Surfing</span><span class="ctag">Snorkeling</span></div><span class="city-arrow">→</span></div>
+    </div>
+
+    <!-- TRANSIT: EL NIDO → CORON -->
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:6px 4px">
+      <div style="width:1.5px;height:14px;background:rgba(8,145,178,0.3);border-radius:1px"></div>
+      <div style="background:rgba(157,23,77,0.07);border:1.5px solid rgba(219,39,119,0.22);border-radius:12px;padding:7px 10px;text-align:center;min-width:90px">
+        <div style="font-size:14px;margin-bottom:3px">⛴</div>
+        <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:10px;color:#9d174d;line-height:1.3">Fast Ferry</div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:1px">12:30 PM → ~5 PM</div>
+        <div style="font-size:10px;color:var(--text-muted)">4–5h · ₱2,600</div>
+      </div>
+      <div style="width:1.5px;height:14px;background:rgba(157,23,77,0.3);border-radius:1px"></div>
+    </div>
+
+    <!-- STOP 4: CORON -->
+    <div class="city-card card-coron" onclick="showPage('coron')" style="cursor:pointer">
+      <div class="city-top"><span class="city-number">Stop 04</span><span class="city-emoji">🤿</span><div class="city-name">Coron</div><div class="city-dates">Jun 12–14 · 2 days</div></div>
+      <div class="city-bottom"><div class="city-tags"><span class="ctag">Wreck diving</span><span class="ctag">Kayangan Lake</span></div><span class="city-arrow">→</span></div>
+    </div>
+
+    <!-- TRANSIT: CORON → CEBU (full row) -->
+    <div style="grid-column:span 3;display:flex;align-items:center;justify-content:center;padding:4px 0;gap:10px">
+      <div style="flex:1;height:1.5px;background:linear-gradient(90deg,rgba(157,23,77,0.15),rgba(217,119,6,0.4));border-radius:1px"></div>
+      <div style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.25);border-radius:12px;padding:7px 14px;display:flex;align-items:center;gap:10px;white-space:nowrap">
+        <span style="font-size:14px">✈</span>
+        <div>
+          <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:10px;color:#92400e">Sunlight Air 2R 852 · USU → CEB</div>
+          <div style="font-size:10px;color:var(--text-muted)">Fri Jun 14 · dep 3:00 PM → arr 5:00 PM · 2h · ₹7,766</div>
+        </div>
+      </div>
+      <div style="flex:1;height:1.5px;background:linear-gradient(90deg,rgba(217,119,6,0.4),rgba(217,119,6,0.15));border-radius:1px"></div>
+    </div>
+
+    <!-- STOP 5: CEBU -->
+    <div class="city-card card-cebu" onclick="showPage('cebu')" style="grid-column:span 3;cursor:pointer">
+      <div class="city-top"><span class="city-number">Stop 05 · Final</span><span class="city-emoji">🌊</span><div class="city-name">Cebu</div><div class="city-dates">Jun 14–15 · 1.5 days · fly home</div></div>
+      <div class="city-bottom"><div class="city-tags"><span class="ctag">History</span><span class="ctag">Shopping</span><span class="ctag">Nightlife</span><span class="ctag">Views</span></div><span class="city-arrow">→</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     MANILA PAGE
+════════════════════════════════════════════ -->
+<div class="page" id="page-manila">
+  <div class="hero">
+    <div class="hero-eyebrow" style="color:var(--ocean-dark)"><span>📍</span> Stop 1 of 5</div>
+    <h1><span class="float">🏙</span> <span class="grad-blue">Manila</span></h1>
+    <p class="hero-sub">Arrive Sun Jun 7 · 1.5 days · BGC is your base. Culture for Shridhar, shopping for Pooja, nightlife for both.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="icon">📅</span><div><span class="hero-stat-val">Jun 7–8</span><span class="hero-stat-lbl">dates</span></div></div>
+      <div class="hero-stat"><span class="icon">🏨</span><div><span class="hero-stat-val">1 night</span><span class="hero-stat-lbl">BGC Uptown</span></div></div>
+      <div class="hero-stat"><span class="icon">💸</span><div><span class="hero-stat-val">₱10–15k</span><span class="hero-stat-lbl">per person</span></div></div>
+      <div class="hero-stat"><span class="icon">🌦</span><div><span class="hero-stat-val">~32°C</span><span class="hero-stat-lbl">hot, pm showers</span></div></div>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="section-title">✈ Getting there</div>
+    <div class="flight-card">
+      <div class="flight-route">
+        <div class="flight-stop"><div class="code code-blue">HYD</div><div class="time">11:55 PM</div><div class="city">Hyderabad</div></div>
+        <div class="flight-line"><div class="airline">AirAsia · AK 68 · A320</div><div class="line line-blue"><span class="plane">✈</span></div><div class="dur">4h 35m overnight</div></div>
+        <div class="flight-stop"><div class="code code-blue">KUL</div><div class="time">7:00 AM <sup>+1</sup></div><div class="city">Kuala Lumpur</div></div>
+      </div>
+      <div class="layover-badge">⏱ 1h 20m layover at KLIA2 · Stay airside · Gate C/D area · Same airline, no re-check-in</div>
+      <div class="flight-route" style="margin-top:14px">
+        <div class="flight-stop"><div class="code code-blue">KUL</div><div class="time">8:20 AM</div><div class="city">Kuala Lumpur</div></div>
+        <div class="flight-line"><div class="airline">AirAsia · AK 582 · A321neo</div><div class="line line-blue"><span class="plane">✈</span></div><div class="dur">3h 55m</div></div>
+        <div class="flight-stop"><div class="code code-blue">MNL</div><div class="time">12:15 PM <sup>+1</sup></div><div class="city">Manila (NAIA T3)</div></div>
+      </div>
+      <div class="flight-tags"><span class="ftag ftag-blue">Sat Jun 6 departure</span><span class="ftag ftag-amber">₹16,508/pax · Book via Goibibo</span><span class="ftag ftag-blue">Economy · 1 free carry-on</span><span class="ftag ftag-green">1st checked bag free (PAL leg)</span></div>
+    </div>
+
+    <div class="section-title">🏨 Where to stay — BGC Uptown</div>
+    <div class="wishlist-bar">
+      All listings in <strong>South Cembo, BGC Uptown</strong> · 1 night Jun 7→8 · walkable to The Palace, High Street &amp; Burgos Circle.<br>
+      <strong>Airbnb Wishlist:</strong> <a href="https://www.airbnb.co.in/wishlists/invite/d14eb203-3f24-4e9b-91ff-7bd1dcb1707f" target="_blank">View full wishlist ↗</a>
+      <span class="wishlist-url">https://www.airbnb.co.in/wishlists/invite/d14eb203-3f24-4e9b-91ff-7bd1dcb1707f</span>
+    </div>
+
+    <div class="stay-card" style="border-color:rgba(52,211,153,0.4);margin-top:14px">
+      <div class="top-badge">⭐ Top pick</div>
+      <div class="stay-header" style="margin-top:8px">
+        <div><div class="stay-name">Skyline Serenity 2BR Suite w/ Balcony</div><div class="stay-desc">2 beds · Guest favourite · ★ 4.93 · South Cembo BGC. Best for two — separate beds, balcony views, highly rated. The clear choice.</div></div>
+        <div class="stay-price"><span class="amount">₹11,667</span><span class="per">1 night</span></div>
+      </div>
+      <div class="tags"><span class="tag tag-leaf">2 beds</span><span class="tag tag-ocean">Balcony</span><span class="tag tag-sand">★ 4.93</span><span class="tag tag-purple">Guest favourite</span></div>
+    </div>
+
+    <div class="stay-card">
+      <div class="stay-header">
+        <div><div class="stay-name">CozyStayUptownView</div><div class="stay-desc">1 queen bed · Guest favourite · ★ 4.95 · South Cembo BGC. Best rated of the bunch. Compact but great value if they're comfortable sharing.</div></div>
+        <div class="stay-price"><span class="amount">₹6,422</span><span class="per">1 night</span></div>
+      </div>
+      <div class="tags"><span class="tag tag-ocean">1 queen bed</span><span class="tag tag-sand">★ 4.95</span><span class="tag tag-leaf">Best value</span></div>
+    </div>
+
+    <div class="stay-card">
+      <div class="stay-header">
+        <div><div class="stay-name">Uptown BGC · Free Parking · Quiet Split AC</div><div class="stay-desc">1 double bed · Apartment · ★ 4.95 · Split AC = better sleep after the overnight flight. Quiet unit, walkable to everything.</div></div>
+        <div class="stay-price"><span class="amount">₹5,427</span><span class="per">1 night</span></div>
+      </div>
+      <div class="tags"><span class="tag tag-ocean">Split AC</span><span class="tag tag-sand">★ 4.95</span><span class="tag tag-leaf">Free parking</span></div>
+    </div>
+
+    <div class="stay-card">
+      <div class="stay-header">
+        <div><div class="stay-name">New &amp; Cozy Deluxe 1BR Suite Uptown BGC</div><div class="stay-desc">1 bed · Apartment · ★ 5.0 · Perfect score, new unit, modern fit-out. Slightly pricier but the 5.0 speaks for itself.</div></div>
+        <div class="stay-price"><span class="amount">₹5,803</span><span class="per">1 night</span></div>
+      </div>
+      <div class="tags"><span class="tag tag-coral">★ 5.0</span><span class="tag tag-ocean">New unit</span><span class="tag tag-sand">Deluxe finish</span></div>
+    </div>
+
+    <div class="section-title">🗓 Day 1 — Sun Jun 7 · Arrive → explore → party</div>
+    <div class="act-grid">
+      <div class="act-card afternoon"><span class="act-icon">🚗</span><div class="act-name">Airport → BGC by Grab</div><div class="act-desc">NAIA T3 to BGC. Book Grab before you exit — do NOT take airport taxi touts. ~40–50 min.</div><div class="act-footer"><span class="act-time">12:30–1:30 PM</span><span class="act-cost">₱300–400</span></div></div>
+      <div class="act-card afternoon"><span class="act-icon">🍜</span><div class="act-name">Lunch: High Street or Mercato</div><div class="act-desc">Mercato Centrale (weekends outdoor market) or Wildflour Café. Filipino-Western fusion, great coffee scene.</div><div class="act-footer"><span class="act-time">1:30–3 PM</span><span class="act-cost">₱500–900/pax</span></div></div>
+      <div class="act-card afternoon"><span class="act-icon">🛍</span><div class="act-name">Shopping: High Street + Mitsukoshi</div><div class="act-desc">Zara, H&M, local brands on High Street. Mitsukoshi BGC at Uptown Mall — Japanese dept store, great skincare.</div><div class="act-footer"><span class="act-time">3–6 PM</span><span class="act-cost">budget as needed</span></div></div>
+      <div class="act-card evening"><span class="act-icon">🍽</span><div class="act-name">Dinner: Burgos Circle</div><div class="act-desc">BGC's food hub. Hey Handsome (pan-Asian), Mecha Uma (Filipino fine dining), or Grab to Poblacion, Makati for a grittier local vibe.</div><div class="act-footer"><span class="act-time">7:30–9:30 PM</span><span class="act-cost">₱800–1,500/pax</span></div></div>
+      <div class="act-card night span2"><span class="act-icon">🎵</span><div class="act-name">The Palace Complex — Xylo / Revel / The Island (BGC 9th Ave)</div><div class="act-desc">Manila's anchor nightlife complex. Xylo (formerly Valkyrie) is the big-room EDM/house club. Revel is upscale and mature. The Island is an outdoor pool-deck club — great combination for both. Opens 10 PM. <strong>Dress code enforced:</strong> men need collared shirt + pants + closed shoes. No shorts, no slippers.</div><div class="act-footer"><span class="act-time">10 PM – late</span><span class="act-cost">₱1,000–1,500 cover + drinks</span></div></div>
+    </div>
+
+    <div class="section-title">🗓 Day 2 — Mon Jun 8 · Culture → Chinatown → fly to PP</div>
+    <div class="act-grid">
+      <div class="act-card morning"><span class="act-icon">🏛</span><div class="act-name">Intramuros — Spanish Walled City</div><div class="act-desc">Fort Santiago, Casa Manila, Manila Cathedral. Depart 8:30 AM, before the heat. 30 min Grab from BGC. 2.5–3h to explore.</div><div class="act-footer"><span class="act-time">9–11:30 AM</span><span class="act-cost">₱200–400 entry</span></div></div>
+      <div class="act-card morning"><span class="act-icon">🚲</span><div class="act-name">Bambike Tour of Intramuros</div><div class="act-desc">Bamboo bicycle guided tour — the best way to do Intramuros. 1.5h with a guide. Book in advance or join at the gate.</div><div class="act-footer"><span class="act-time">9 AM slot</span><span class="act-cost">₱600–800/pax</span></div></div>
+      <div class="act-card morning span2"><span class="act-icon">🥟</span><div class="act-name">Binondo — World's Oldest Chinatown</div><div class="act-desc">5 min from Intramuros. Sincerity Restaurant for Filipino-Chinese, Wai Ying for dimsum, Ongpin Street tikoy stalls. Cash only — carry ₱1,000–2,000 PHP in small bills.</div><div class="act-footer"><span class="act-time">11:30 AM–1 PM</span><span class="act-cost">₱300–500/pax</span></div></div>
+      <div class="act-card afternoon"><span class="act-icon">🛍</span><div class="act-name">Last stop: Market! Market!</div><div class="act-desc">Back in BGC. Local brand stalls, pasalubong (souvenir) shops. Good for last-minute picks before Palawan.</div><div class="act-footer"><span class="act-time">2:30–4 PM</span><span class="act-cost">budget as needed</span></div></div>
+      <div class="act-card afternoon"><span class="act-icon">✈</span><div class="act-name">Head to NAIA → fly to Puerto Princesa</div><div class="act-desc">Allow 2.5h before departure. Philippine Airlines PR 2779 · dep 7:25 PM · arr 8:45 PM. Grab from BGC ~40 min.</div><div class="act-footer"><span class="act-time">Leave BGC by 4:30 PM</span><span class="act-cost">₱300–400 Grab</span></div></div>
+    </div>
+
+    <div class="section-title">💰 Budget estimate — Manila</div>
+    <div class="budget-card blue">
+      <div class="budget-row"><span class="budget-cat">Airbnb 1 night (split 2 ways)</span><span class="budget-amt">₱2,000–6,000 <span class="budget-note">each (depends on pick)</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Food — ~4 meals each</span><span class="budget-amt">₱2,500–4,000 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Grab rides (airport × 2 + day trips)</span><span class="budget-amt">₱800–1,200 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Intramuros + Binondo</span><span class="budget-amt">₱900–1,300 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">The Palace (cover + drinks)</span><span class="budget-amt">₱2,500–4,000 <span class="budget-note">each</span></span></div>
+      <div class="budget-row total"><span class="budget-cat">Total per person (excl. shopping)</span><span class="budget-amt">≈ ₱9,000–16,500 <span class="budget-note">~₹4,600–8,500</span></span></div>
+    </div>
+
+    <div class="section-title">💡 Tips</div>
+    <div class="tips-grid">
+      <div class="tip-card"><strong>Grab only from NAIA</strong>Book inside the arrivals hall before stepping out. Taxi touts will approach you — ignore them. Grab is reliable and cheaper.</div>
+      <div class="tip-card"><strong>The Palace dress code</strong>Enforced strictly. Men: collared shirt + pants + closed shoes. Women: no flat slippers. Pack these in hand luggage.</div>
+      <div class="tip-card"><strong>Binondo = cash only</strong>The best stalls don't take cards. Carry ₱1,000–2,000 in small bills for Chinatown.</div>
+      <div class="tip-card"><strong>KUL layover: 1h 20m is tight</strong>Same AirAsia airline — no re-check-in. Stay airside at KLIA2. Gate areas C/D. Walk fast, skip the shops.</div>
+      <div class="tip-card"><strong>Get Globe/Smart SIM on arrival</strong>Available inside NAIA arrivals. ₱300–499 for 10–15 days unlimited data. Activate before you leave — you need Grab immediately.</div>
+      <div class="tip-card"><strong>June = low season Manila</strong>No crowds at Intramuros, lower Airbnb rates. Afternoon rain possible — keep Grab handy, have a café fallback.</div>
+    </div>
+  </div>
+  <div class="footer-nav">
+    <button class="nav-btn btn-prev" onclick="showPage('home')">← Home</button>
+    <button class="nav-btn btn-next-pp" onclick="showPage('pp')">Puerto Princesa → 🌿</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     PUERTO PRINCESA PAGE
+════════════════════════════════════════════ -->
+<div class="page" id="page-pp">
+  <div class="hero">
+    <div class="hero-eyebrow" style="color:var(--pp)"><span>📍</span> Stop 2 of 5 · Transit + UNESCO tick</div>
+    <h1><span class="float">🌿</span> <span class="grad-pp">Puerto Princesa</span></h1>
+    <p class="hero-sub">Arrive Mon Jun 8 evening · 1 overnight · One mission: Underground River in the morning, then van to El Nido.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="icon">📅</span><div><span class="hero-stat-val">Jun 8–9</span><span class="hero-stat-lbl">overnight only</span></div></div>
+      <div class="hero-stat"><span class="icon">🏛</span><div><span class="hero-stat-val">UNESCO</span><span class="hero-stat-lbl">Underground River</span></div></div>
+      <div class="hero-stat"><span class="icon">💸</span><div><span class="hero-stat-val">₱5,000–7,500</span><span class="hero-stat-lbl">per person total</span></div></div>
+      <div class="hero-stat"><span class="icon">⏱</span><div><span class="hero-stat-val">~24h</span><span class="hero-stat-lbl">in &amp; out</span></div></div>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="section-title pp-accent">🗺 The plan</div>
+    <div class="transit-box">
+      <div class="transit-title">⚡ PP is transit + a UNESCO tick — not a sightseeing stop</div>
+      <div class="transit-body">Fly in from Manila <strong>Mon Jun 8 at 8:45 PM</strong>. Sleep. Wake up early for Underground River (<strong>6:30–7 AM pickup</strong>). Back to PP by 2–3 PM. Catch the <strong>3:30 PM shared van to El Nido</strong> — arrive ~9 PM. That's it. No Honda Bay, no city touring. The river alone justifies the stop.</div>
+    </div>
+
+    <div class="section-title pp-accent">✈ Getting there — Manila to Puerto Princesa</div>
+    <div class="flight-card pp-card">
+      <div class="flight-route">
+        <div class="flight-stop"><div class="code code-pp">MNL</div><div class="time">7:25 PM</div><div class="city">Manila (NAIA)</div></div>
+        <div class="flight-line"><div class="airline">Philippine Airlines · PR 2779 · A320</div><div class="line line-pp"><span class="plane">✈</span></div><div class="dur">1h 20m</div></div>
+        <div class="flight-stop"><div class="code code-pp">PPS</div><div class="time">8:45 PM</div><div class="city">Puerto Princesa</div></div>
+      </div>
+      <div class="flight-tags"><span class="ftag ftag-green">Mon Jun 8 · Philippine Airlines</span><span class="ftag ftag-amber">₹4,870 / person</span><span class="ftag ftag-green">1 free carry-on · 1st checked bag free</span><span class="ftag ftag-blue">Economy · Airbus A320</span></div>
+    </div>
+
+    <div class="section-title pp-accent">🏨 Where to stay — Puerto Princesa</div>
+    <div class="warn-box">⏳ <strong>1 night only (Jun 8 → Jun 9 early checkout).</strong> All listings in PP city proper — tour van pickup is from your hotel at 7 AM. Pick based on beds needed and budget.</div>
+
+    <div class="wishlist-bar" style="border-color:rgba(5,150,105,0.25);background:rgba(209,250,229,0.3)">
+      All listings are for <strong>8–9 Jun · 1 night</strong> · Puerto Princesa city proper.<br>
+      <strong>Airbnb Wishlist:</strong> <a href="https://www.airbnb.co.in/wishlists/invite/8ac4e752-7b54-4b03-ba0d-2e54fdfb63e9" target="_blank">View full wishlist ↗</a>
+      <span class="wishlist-url">https://www.airbnb.co.in/wishlists/invite/8ac4e752-7b54-4b03-ba0d-2e54fdfb63e9</span>
+    </div>
+
+    <div class="stay-card" style="border-color:rgba(52,211,153,0.4);margin-top:14px">
+      <div class="top-badge">⭐ Top pick</div>
+      <div class="stay-header" style="margin-top:8px">
+        <div><div class="stay-name">Astra Tourist Inn — near airport</div><div class="stay-desc">Private room · 1 double bed · ★ 4.92 · Guest favourite · High speed WiFi. Perfect location — near airport belt means the 7 AM tour pickup is zero stress. Compact but clean, great value for 1 night.</div></div>
+        <div class="stay-price"><span class="amount">₹2,081</span><span class="per">1 night</span></div>
+      </div>
+      <div class="tags"><span class="tag tag-leaf">Near airport</span><span class="tag tag-sand">★ 4.92</span><span class="tag tag-ocean">High speed WiFi</span><span class="tag tag-purple">Best value</span></div>
+    </div>
+
+    <div class="stay-card">
+      <div class="stay-header">
+        <div><div class="stay-name">Avocado Homestay PPC</div><div class="stay-desc">Guest house · 3 beds · ★ 4.93 · Cute A-frame chalet style with garden views — the nicest looking of the bunch. Good if they want a bit more character for their one night.</div></div>
+        <div class="stay-price"><span class="amount">₹3,166</span><span class="per">1 night</span></div>
+      </div>
+      <div class="tags"><span class="tag tag-leaf">3 beds</span><span class="tag tag-sand">★ 4.93</span><span class="tag tag-ocean">Garden / chalet</span></div>
+    </div>
+
+    <div class="stay-card">
+      <div class="stay-header">
+        <div><div class="stay-name">2-story Home · Washer + Netflix · Near Airport</div><div class="stay-desc">Home in Maunlad · 3 beds · ★ 4.86 · Most spacious option — full 2-story house, modern interiors. Good choice if they want to spread out after the overnight flight from Manila.</div></div>
+        <div class="stay-price"><span class="amount">₹3,933</span><span class="per">1 night</span></div>
+      </div>
+      <div class="tags"><span class="tag tag-ocean">3 beds · 2 floors</span><span class="tag tag-sand">★ 4.86</span><span class="tag tag-leaf">Netflix · Washer</span></div>
+    </div>
+
+    <div class="stay-card">
+      <div class="stay-header">
+        <div><div class="stay-name">Balai ni Eve — Streetview 2BR Flat</div><div class="stay-desc">Private room · 5 beds · ★ 4.8 · Guest favourite. Larger group-style flat — likely overkill for 2 people but a solid fallback if others are booked.</div></div>
+        <div class="stay-price"><span class="amount">₹2,906</span><span class="per">1 night</span></div>
+      </div>
+      <div class="tags"><span class="tag tag-ocean">5 beds</span><span class="tag tag-sand">★ 4.8</span></div>
+    </div>
+
+    <div class="stay-card" style="background:rgba(255,237,213,0.4);border-color:rgba(245,158,11,0.25)">
+      <div class="stay-header">
+        <div><div class="stay-name">2BR Fully Air-conditioned · 3 mins to...</div><div class="stay-desc">Home in PP · 7 beds · ★ 4.97 · Highest rated but 7 beds is way more than needed. Only consider if all others are unavailable.</div></div>
+        <div class="stay-price" style="background:rgba(245,158,11,0.15);box-shadow:none"><span class="amount" style="color:#92400e">₹6,612</span><span class="per" style="color:#b45309">overkill</span></div>
+      </div>
+      <div class="tags"><span class="tag tag-sand">7 beds — too large</span><span class="tag tag-sand">★ 4.97</span></div>
+    </div>
+
+    <div class="section-title pp-accent">🏛 The main event — Underground River</div>
+    <div class="ur-hero">
+      <div class="ur-title">🌊 Puerto Princesa Subterranean River National Park</div>
+      <div class="ur-badges">
+        <span class="ur-badge ub-gold">UNESCO World Heritage Site 1999</span>
+        <span class="ur-badge ub-blue">New 7 Wonders of Nature</span>
+        <span class="ur-badge ub-green">8.2 km · longest navigable underground river</span>
+      </div>
+      <div class="ur-body">The cave stretches 24 km through limestone and exits directly into the South China Sea. You explore 1.5 km by paddle boat — massive chambers, stalactites, millions of bats, endemic swiftlets. The 45-min boat tour inside the cave genuinely can't be captured in photos.<br><br><strong>Critical:</strong> Daily cap is 900 visitors. <strong>No permit, no entry — no exceptions.</strong> Permits take 3 days to process. Book a tour operator who handles the permit from India.</div>
+    </div>
+
+    <div class="section-title pp-accent">🗓 Day schedule — Jun 9</div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot" style="background:#f59e0b"></div><div class="tl-card"><div class="tl-header"><div class="tl-name">⏰ Wake up, light breakfast</div><div class="tl-time">6:00 AM</div></div><div class="tl-body">Pack dry bag, sunscreen, flip flops or water shoes. Tour includes a buffet lunch at Sabang — skip a heavy breakfast.</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--pp)"></div><div class="tl-card"><div class="tl-header"><div class="tl-name">🚐 Tour van hotel pickup</div><div class="tl-time">6:30–7:00 AM</div></div><div class="tl-body">Shared van collects guests from city proper hotels. Confirm pickup time with operator the evening before. ~1.5–2h drive to Sabang.</div><div class="tl-cost">included in tour</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--ocean)"></div><div class="tl-card"><div class="tl-header"><div class="tl-name">🏖 Arrive Sabang · optional zipline / mangrove</div><div class="tl-time">9:00–10:30 AM</div></div><div class="tl-body">While waiting for your boat slot: <strong>Sabang X Zipline</strong> (₱550) or <strong>Mangrove River Cruise</strong> (₱300). Both run by the local community. Monitor lizards and macaques all around.</div><div class="tl-cost">₱300–550 optional</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--pp)"></div><div class="tl-card"><div class="tl-header"><div class="tl-name">⛵ Pump boat + Underground River paddle tour</div><div class="tl-time">10:30 AM–12 PM</div></div><div class="tl-body">Short pump boat to cave mouth. Helmet + life jacket provided. ~45 min inside by paddle boat. Audio guide in English. Watch your bags — macaques will grab anything.</div><div class="tl-cost">included in tour</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--sand-dark)"></div><div class="tl-card"><div class="tl-header"><div class="tl-name">🍽 Filipino buffet lunch at Sabang</div><div class="tl-time">12:00–1:00 PM</div></div><div class="tl-body">Included in most packages. Rice, seafood, grilled dishes. Vegetarian options available.</div><div class="tl-cost">included in tour</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--ocean)"></div><div class="tl-card"><div class="tl-header"><div class="tl-name">🚐 Van back to PP city</div><div class="tl-time">1:00–3:00 PM</div></div><div class="tl-body">~1.5–2h return drive. Dropped at hotel or terminal. Grab bags and head to the El Nido van stop.</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--pp)"></div><div class="tl-card"><div class="tl-header"><div class="tl-name">🚐 Shared van → El Nido departs</div><div class="tl-time">3:30 PM</div></div><div class="tl-body">Book the 3:30 PM van to El Nido in advance (Klook / Palawan Days). Hotel pickup. ~5–6h journey with a dinner stop near Roxas (~₱300 for a meal).</div><div class="tl-cost">₱650–700 / person</div></div></div>
+      <div class="tl-item"><div class="tl-dot" style="background:var(--leaf)"></div><div class="tl-card"><div class="tl-header"><div class="tl-name">🏝 Arrive El Nido!</div><div class="tl-time">~9:00–10:00 PM</div></div><div class="tl-body">Dropped at El Nido transport terminal. Tricycle to Airbnb (~₱100). Check in, rest — big days ahead.</div></div></div>
+    </div>
+
+    <div class="section-title pp-accent">🎟 Book this tour</div>
+    <div class="warn-box">🔔 <strong>Book NOW from India — not on arrival.</strong> Daily cap is 900 visitors. No permit = no entry, no exceptions. Permit takes 3 days to process. Book via GetYourGuide — they handle everything.</div>
+
+    <!-- RECOMMENDED TOUR HERO -->
+    <div class="ur-hero" style="margin-bottom:14px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div style="flex:1">
+          <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:17px;color:var(--text);margin-bottom:6px">TOP ACE Island Adventure Travel Services</div>
+          <div class="ur-badges" style="margin-bottom:10px">
+            <span class="ur-badge ub-gold">★ 4.4 · 43 verified reviews</span>
+            <span class="ur-badge ub-green">✓ Free cancellation up to 24h</span>
+            <span class="ur-badge ub-blue">Reserve now, pay later</span>
+            <span class="ur-badge ub-green">Multi-language audio guides</span>
+          </div>
+          <div class="ur-body" style="margin-bottom:12px">
+            <strong>7:00 AM start</strong> — ideal with Jun 9 checkout timing. Fully all-inclusive: hotel transfers, entrance fees, permit, cave guide, buffet lunch. Highest value for money vs Viator alternatives. Highly recommended by recent travellers (March 2026 reviews).
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <a href="https://www.getyourguide.com/puerto-princesa-l1000/puerto-princesa-underground-river-tour-t627422/" target="_blank" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--pp),var(--pp-mid));color:white;text-decoration:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;padding:10px 18px;border-radius:99px;box-shadow:0 3px 14px rgba(5,150,105,0.4)">Book on GetYourGuide ↗</a>
+            <span style="font-size:11px;color:var(--text-muted);font-family:monospace;word-break:break-all">getyourguide.com/puerto-princesa-l1000/puerto-princesa-underground-river-tour-t627422</span>
+          </div>
+        </div>
+        <div style="background:linear-gradient(135deg,var(--pp),var(--pp-mid));color:white;border-radius:16px;padding:12px 18px;text-align:center;flex-shrink:0;box-shadow:0 3px 14px rgba(5,150,105,0.4);min-width:100px">
+          <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:22px;display:block">₹4,663</span>
+          <span style="font-size:11px;opacity:0.9">per person</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tour-grid">
+      <div class="tour-card top" style="grid-column:span 2">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px">
+          <div style="font-size:13px;color:var(--text-soft)">✓ <strong style="color:var(--text)">7:00 AM start</strong> — perfect before the El Nido van</div>
+          <div style="font-size:13px;color:var(--text-soft)">✓ <strong style="color:var(--text)">Hotel pickup</strong> from PP city proper</div>
+          <div style="font-size:13px;color:var(--text-soft)">✓ <strong style="color:var(--text)">Permit handled</strong> — no queuing, no hassle</div>
+          <div style="font-size:13px;color:var(--text-soft)">✓ <strong style="color:var(--text)">Buffet lunch</strong> included at Sabang</div>
+          <div style="font-size:13px;color:var(--text-soft)">✓ <strong style="color:var(--text)">Multi-language audio guide</strong> inside cave</div>
+          <div style="font-size:13px;color:var(--text-soft)">✓ <strong style="color:var(--text)">All entrance fees</strong> included</div>
+          <div style="font-size:13px;color:var(--text-soft)">✓ <strong style="color:var(--text)">Free cancellation</strong> up to 24h before</div>
+          <div style="font-size:13px;color:var(--text-soft)">✓ <strong style="color:var(--text)">Reserve now, pay later</strong> — no upfront risk</div>
+        </div>
+        <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(5,150,105,0.15);font-size:12px;color:var(--text-muted)">Add-ons at extra cost on the day: Sabang X Zipline (₱550) · Mangrove River Cruise (₱300) · ₱150 eco-fee cash at park entrance</div>
+      </div>
+    </div>
+
+    <div class="section-title pp-accent">💰 Budget estimate — Puerto Princesa</div>
+    <div class="budget-card pp">
+      <div class="budget-row"><span class="budget-cat">MNL → PPS flight (Philippine Airlines PR 2779)</span><span class="budget-amt">₹4,870 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">1 night hotel / Airbnb (split 2 ways)</span><span class="budget-amt">₱750–1,500 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Underground River — TOP ACE via GetYourGuide</span><span class="budget-amt">₹4,663 <span class="budget-note">each (all-inclusive)</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Eco-fee at park (cash)</span><span class="budget-amt">₱150 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Optional: zipline / mangrove cruise</span><span class="budget-amt">₱300–550 <span class="budget-note">each, optional</span></span></div>
+      <div class="budget-row"><span class="budget-cat">PP → El Nido van</span><span class="budget-amt">₱650–700 <span class="budget-note">each</span></span></div>
+      <div class="budget-row total pp-total"><span class="budget-cat">Total per person</span><span class="budget-amt">₹4,870 (flight) + ₹4,663 (tour) + ₱2,400–3,000 (stay/van/extras) <span class="budget-note">≈ ₹10,800–12,000 all in</span></span></div>
+    </div>
+
+    <div class="section-title pp-accent">💡 Tips</div>
+    <div class="tips-grid">
+      <div class="tip-card"><strong>Book the permit NOW</strong>Book Underground River tour from India at least 2–3 weeks before. Don't assume walk-in is possible — it isn't during any season.</div>
+      <div class="tip-card"><strong>Don't feed the monkeys</strong>Sabang macaques are notorious bag-grabbers. Zip everything. They've stolen phones, hats, and snacks from tourists.</div>
+      <div class="tip-card"><strong>Wear the right footwear</strong>You'll step into water boarding and exiting the paddle boat. Flip flops or water shoes. Socks and sneakers will stay wet all day.</div>
+      <div class="tip-card"><strong>No Grab in PP</strong>Puerto Princesa has no Grab. Use metered tricycles (~₱50–120/trip) or your tour van handles all the Sabang logistics.</div>
+      <div class="tip-card"><strong>Book the El Nido van too</strong>The 3:30 PM van is your connection to El Nido. Book it alongside the river tour — same Klook booking session if possible.</div>
+      <div class="tip-card"><strong>Dinner on the van</strong>The PP→El Nido van stops ~30 min near Roxas for a meal. Carry ₱300–400 cash for a simple canteen dinner on the road.</div>
+    </div>
+  </div>
+  <div class="footer-nav">
+    <button class="nav-btn btn-prev" onclick="showPage('manila')">← Manila</button>
+    <button class="nav-btn" style="background:linear-gradient(135deg,#0891b2,#06b6d4);color:white;box-shadow:0 4px 20px rgba(8,145,178,0.4)" onclick="showPage('elnido')">El Nido → 🏝</button>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     EL NIDO PAGE
+════════════════════════════════════════════ -->
+<div class="page" id="page-elnido">
+<style>
+  --en:#0891b2; --en-mid:#22d3ee; --en-light:#cffafe;
+  .en-grad{background:linear-gradient(135deg,#0891b2,#22d3ee)}
+  .section-title.en-accent::after{background:linear-gradient(90deg,rgba(8,145,178,0.3) 0%,transparent 100%)}
+  .en-hero-eyebrow{color:#0891b2}
+  .grad-en{background:linear-gradient(135deg,#0891b2 0%,#06b6d4 50%,#34d399 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .en-flight-card{background:linear-gradient(135deg,rgba(8,145,178,0.10) 0%,rgba(34,211,238,0.07) 100%);border:1.5px solid rgba(8,145,178,0.25)}
+  .en-code{color:#0e7490}
+  .line-en::before,.line-en::after{background:linear-gradient(90deg,rgba(8,145,178,0.3),#0891b2)}
+
+  /* transport option cards */
+  .trans-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+  @media(max-width:560px){.trans-grid{grid-template-columns:1fr}}
+  .trans-card{background:var(--glass);border:1.5px solid var(--glass-border);border-radius:18px;padding:16px 18px;backdrop-filter:blur(12px);box-shadow:var(--sh-card)}
+  .trans-card.top-pick{border-color:rgba(8,145,178,0.4)}
+  .trans-name{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--text);margin-bottom:5px}
+  .trans-desc{font-size:12px;color:var(--text-soft);line-height:1.55;margin-bottom:10px}
+  .trans-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .trans-provider{font-size:11px;font-weight:700;color:var(--text-muted)}
+  .trans-price{font-size:11px;font-weight:800;padding:3px 10px;border-radius:99px;background:var(--sand);color:#92400e;border:1.5px solid #fcd34d}
+  .trans-badge{font-size:11px;font-weight:800;padding:3px 9px;border-radius:99px;display:inline-block;margin-bottom:8px}
+  .tb-en{background:#cffafe;color:#0e4f5a}
+  .tb-green{background:#d1fae5;color:#064e3b}
+  .tb-amber{background:#fef3c7;color:#78350f}
+
+  /* tour cards */
+  .tour-big-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+  @media(max-width:560px){.tour-big-grid{grid-template-columns:1fr}}
+  .tour-big-card{background:var(--glass);border:1.5px solid var(--glass-border);border-radius:18px;padding:16px 18px;backdrop-filter:blur(12px);box-shadow:var(--sh-card)}
+  .tour-big-card.must{border-color:rgba(8,145,178,0.4)}
+  .tb-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;color:var(--text);margin-bottom:3px}
+  .tb-subtitle{font-size:11px;color:var(--text-muted);font-weight:700;margin-bottom:10px}
+  .tb-stop{display:flex;gap:6px;font-size:12px;color:var(--text-soft);padding:4px 0;border-bottom:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.1));align-items:flex-start}
+  .tb-stop:last-of-type{border-bottom:none}
+  .tb-dot{width:6px;height:6px;border-radius:50%;background:#0891b2;flex-shrink:0;margin-top:4px}
+  .tb-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding-top:8px;border-top:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.1))}
+
+  /* activity pills */
+  .act-section{margin-bottom:1.25rem}
+  .act-pill-grid{display:flex;flex-wrap:wrap;gap:7px}
+  .act-pill{display:flex;align-items:center;gap:6px;padding:7px 12px;background:var(--glass);border:1.5px solid var(--glass-border);border-radius:99px;font-size:12px;color:var(--text-soft);backdrop-filter:blur(8px);box-shadow:var(--sh-blue)}
+  .act-pill strong{color:var(--text);font-weight:700}
+  .act-pill .cost{font-size:11px;color:var(--text-muted);margin-left:2px}
+
+  /* day plan */
+  .day-plan{border:0.5px solid var(--glass-border);border-radius:var(--border-radius-lg,12px);overflow:hidden;margin-bottom:1.25rem}
+  .dp-row{display:grid;grid-template-columns:90px 1fr}
+  .dp-row:not(:last-child){border-bottom:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.1))}
+  .dp-day{padding:10px 12px;font-size:12px;font-weight:500;color:var(--text-muted);border-right:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.1));background:var(--glass)}
+  .dp-content{padding:10px 14px;font-size:13px;color:var(--text);line-height:1.55}
+  .dp-sub{font-size:11px;color:var(--text-soft);margin-top:2px}
+
+  /* stay placeholder */
+  .stay-placeholder{background:rgba(207,250,254,0.4);border:1.5px solid rgba(8,145,178,0.2);border-radius:18px;padding:18px 20px;margin-bottom:12px;text-align:center}
+  .sp-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;color:#0e7490;margin-bottom:6px}
+  .sp-sub{font-size:13px;color:var(--text-soft);line-height:1.6}
+
+  /* budget */
+  .budget-card.en{background:linear-gradient(135deg,rgba(8,145,178,0.09),rgba(34,211,238,0.06));border:1.5px solid rgba(8,145,178,0.2)}
+  .budget-row.en-total{background:rgba(8,145,178,0.09)}
+</style>
+
+  <div class="hero">
+    <div class="hero-eyebrow en-hero-eyebrow"><span>📍</span> Stop 3 of 5 · The headline act</div>
+    <h1><span class="float">🏝</span> <span class="grad-en">El Nido</span></h1>
+    <p class="hero-sub">Arrive Jun 9 late evening · 3.5 days · Corong Corong base · island hopping, surfing, lagoons, sunsets.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="icon">📅</span><div><span class="hero-stat-val">Jun 9–12</span><span class="hero-stat-lbl">3.5 days</span></div></div>
+      <div class="hero-stat"><span class="icon">🏘</span><div><span class="hero-stat-val">Corong Corong</span><span class="hero-stat-lbl">recommended base</span></div></div>
+      <div class="hero-stat"><span class="icon">⛵</span><div><span class="hero-stat-val">Tour A + C</span><span class="hero-stat-lbl">must-do tours</span></div></div>
+      <div class="hero-stat"><span class="icon">🌦</span><div><span class="hero-stat-val">~31°C</span><span class="hero-stat-lbl">June, some showers</span></div></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- GETTING THERE -->
+    <div class="section-title en-accent">🚐 Getting there — Puerto Princesa → El Nido</div>
+
+    <div class="flight-card en-flight-card" style="margin-bottom:12px">
+      <div class="flight-route">
+        <div class="flight-stop"><div class="code en-code">PPS</div><div class="time">~4:00 PM</div><div class="city">Puerto Princesa</div></div>
+        <div class="flight-line"><div class="airline">Private van · ~5–6h · 264 km north</div><div class="line line-en"><span class="plane">🚐</span></div><div class="dur">1 stop for dinner near Roxas (~30 min)</div></div>
+        <div class="flight-stop"><div class="code en-code">ENI</div><div class="time">~9:30–10:00 PM</div><div class="city">El Nido (Corong Corong)</div></div>
+      </div>
+      <div class="flight-tags" style="margin-top:10px">
+        <span class="ftag ftag-blue">Mon Jun 9 · depart ~4 PM</span>
+        <span class="ftag ftag-green">Drop-off at Corong Corong — free</span>
+        <span class="ftag ftag-amber">Carry ₱300–400 cash for dinner stop</span>
+      </div>
+    </div>
+
+    <div class="trans-grid">
+      <div class="trans-card top-pick" style="position:relative;overflow:visible">
+        <div style="position:absolute;top:-10px;left:14px;background:linear-gradient(135deg,#0891b2,#22d3ee);color:white;font-size:11px;font-weight:800;padding:3px 12px;border-radius:99px;box-shadow:0 2px 8px rgba(8,145,178,0.35)">⭐ Recommended</div>
+        <div style="margin-top:8px">
+          <span class="trans-badge tb-en">El Nido Paradise Tours</span>
+          <div class="trans-name">Private van — cheapest & most flexible</div>
+          <div class="trans-desc">₱8,000 total for the entire van (just the two of them). Pay ₱2,500 deposit online, ₱5,500 cash to driver on pickup. Choose your departure time, customise meal stops. Drop-off at Corong Corong is free.</div>
+          <div class="trans-footer">
+            <span class="trans-provider">elnidoparadise.com</span>
+            <span class="trans-price">₱8,000 total (~₹6,400)</span>
+          </div>
+        </div>
+      </div>
+      <div class="trans-card">
+        <span class="trans-badge tb-amber">Premium service</span>
+        <div class="trans-name">Diskubre Palawan — best-rated</div>
+        <div class="trans-desc">4.5/5 rating on TripAdvisor. WhatsApp communication before and during trip, scenic viewpoint stops at no extra cost. English-speaking drivers. Worth the marginal extra cost for peace of mind.</div>
+        <div class="trans-footer">
+          <span class="trans-provider">diskubrepalawan.com</span>
+          <span class="trans-price">₱6,000–8,000 total</span>
+        </div>
+      </div>
+      <div class="trans-card">
+        <span class="trans-badge tb-green">Budget option</span>
+        <div class="trans-name">Klook shared van — if cost is priority</div>
+        <div class="trans-desc">₱650–700 per person. Toyota HiAce, 10–12 passengers. Multiple daily departures. 3:30 PM slot fits the schedule. Shared with other travellers but perfectly comfortable. Book via Klook.</div>
+        <div class="trans-footer">
+          <span class="trans-provider">Klook · same-day booking OK</span>
+          <span class="trans-price">₱700/pax (~₹360)</span>
+        </div>
+      </div>
+      <div class="stay-card" style="background:rgba(207,250,254,0.3);border-color:rgba(8,145,178,0.2);margin-bottom:0">
+        <div class="stay-name" style="font-size:13px;margin-bottom:6px">On arrival — getting to the Airbnb</div>
+        <div class="stay-desc">Van drops at El Nido Transport Terminal (Corong Corong). Take a tricycle to your Airbnb (~₱100). Terminal is the hub — easy to find.</div>
+      </div>
+    </div>
+
+    <!-- WHERE TO STAY -->
+    <div class="section-title en-accent">🏨 Where to stay — Corong Corong</div>
+
+    <div class="warn-box" style="border-color:rgba(8,145,178,0.3);background:rgba(207,250,254,0.4);color:#0e4f5a">
+      📍 <strong style="color:#0e7490">Stay in Corong Corong or El Nido Town.</strong> Town is most convenient for early tour departures (walk to pier). Corong Corong is 5 min trike, quieter, better sunsets. Both work perfectly — pick based on vibe and budget.
+    </div>
+
+    <div class="wishlist-bar" style="border-color:rgba(8,145,178,0.25);background:rgba(207,250,254,0.3);margin-bottom:14px">
+      All listings for <strong>Jun 9–12 · 3 nights · 2 guests</strong> · El Nido area.<br>
+      <strong>Airbnb Wishlist:</strong> <a href="https://www.airbnb.co.in/wishlists/invite/14db1b88-50ac-46cd-b058-25f34d0b2229" target="_blank" style="color:#0891b2;font-weight:700">View full wishlist ↗</a>
+      <span class="wishlist-url">https://www.airbnb.co.in/wishlists/invite/14db1b88-50ac-46cd-b058-25f34d0b2229</span>
+    </div>
+
+    <!-- TIER LABEL -->
+    <div style="font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin:14px 0 8px;display:flex;align-items:center;gap:8px">Budget-friendly <span style="flex:1;height:1px;background:var(--color-border-tertiary,rgba(0,0,0,0.1))"></span></div>
+
+    <!-- Listing 1: Blued Apartment -->
+    <div class="stay-card" style="border-color:rgba(8,145,178,0.4);position:relative;overflow:visible;margin-bottom:10px">
+      <div class="top-badge" style="background:linear-gradient(135deg,#0891b2,#22d3ee)">⭐ Best value</div>
+      <div class="stay-header" style="margin-top:8px">
+        <div>
+          <div class="stay-name">Blued Apartment — Near Lio Beach &amp; Airport</div>
+          <div class="stay-desc">Flat in Villa Libertad · 1 bed · Superhost · ★ 4.8 · Bright, cheerful, Superhost quality. Villa Libertad is slightly north of El Nido town — 10 min trike to pier. Cheapest option and best-credentialed host on the list.</div>
+        </div>
+        <div class="stay-price" style="background:linear-gradient(135deg,#0891b2,#22d3ee);box-shadow:0 3px 12px rgba(8,145,178,0.35)">
+          <span class="amount">₹15,703</span><span class="per">3 nights</span>
+        </div>
+      </div>
+      <div class="tags"><span class="tag tag-ocean">Superhost</span><span class="tag tag-sand">★ 4.8</span><span class="tag tag-leaf">₹5,234/night</span><span class="tag tag-ocean">Near Lio</span></div>
+    </div>
+
+    <!-- Listing 2: Cozy Room -->
+    <div class="stay-card" style="margin-bottom:10px">
+      <div class="stay-header">
+        <div>
+          <div class="stay-name">Cozy Room — Center of El Nido Town</div>
+          <div class="stay-desc">Flat in El Nido · 1 bed · Guest favourite · ★ 4.79 · Best location — walking distance to the tour departure pier, Calle Hama bars, and restaurants. Boho-chic interiors, teal and green palette. Most practical base for the 9 AM tour departures.</div>
+        </div>
+        <div class="stay-price" style="background:linear-gradient(135deg,#0891b2,#22d3ee);box-shadow:0 3px 12px rgba(8,145,178,0.35)">
+          <span class="amount">₹24,793</span><span class="per">3 nights</span>
+        </div>
+      </div>
+      <div class="tags"><span class="tag tag-purple">Guest favourite</span><span class="tag tag-sand">★ 4.79</span><span class="tag tag-leaf">₹8,264/night</span><span class="tag tag-ocean">Walk to tour pier</span></div>
+    </div>
+
+    <!-- Listing 3: Spacious Apartment / hammock -->
+    <div class="stay-card" style="margin-bottom:10px">
+      <div class="stay-header">
+        <div>
+          <div class="stay-name">Spacious Apartment — El Nido Town Centre</div>
+          <div class="stay-desc">Flat in El Nido · 1 bed · ★ 4.72 · The bamboo terrace + hammock listing. Open-air tropical vibe, lush greenery all around — exactly the El Nido aesthetic. Town centre location. The photo sells it.</div>
+        </div>
+        <div class="stay-price" style="background:linear-gradient(135deg,#0891b2,#22d3ee);box-shadow:0 3px 12px rgba(8,145,178,0.35)">
+          <span class="amount">₹22,539</span><span class="per">3 nights</span>
+        </div>
+      </div>
+      <div class="tags"><span class="tag tag-sand">★ 4.72</span><span class="tag tag-leaf">₹7,513/night</span><span class="tag tag-ocean">Bamboo terrace + hammock</span></div>
+    </div>
+
+    <!-- TIER LABEL -->
+    <div style="font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin:14px 0 8px;display:flex;align-items:center;gap:8px">Premium <span style="flex:1;height:1px;background:var(--color-border-tertiary,rgba(0,0,0,0.1))"></span></div>
+
+    <!-- Listing 4: Amelia Room / Colibris Corner -->
+    <div class="stay-card" style="border-color:rgba(157,23,77,0.3);position:relative;overflow:visible;margin-bottom:10px">
+      <div class="top-badge" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">🏆 National Geographic Luxury</div>
+      <div class="stay-header" style="margin-top:8px">
+        <div>
+          <div class="stay-name">Amelia Room at Colibris Corner</div>
+          <div class="stay-desc">Flat in Corong-corong Poblacion · 1 king bed · ★ 4.89 · Featured in National Geographic Traveller Luxury Collection 2023. Treehouse-style architecture in a jungle setting, dramatic wooden structure. Corong Corong location — perfect for sunsets. A step up in experience.</div>
+        </div>
+        <div class="stay-price" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);box-shadow:0 3px 12px rgba(124,58,237,0.35)">
+          <span class="amount">₹43,304</span><span class="per">3 nights</span>
+        </div>
+      </div>
+      <div class="tags"><span class="tag tag-purple">Nat Geo Luxury 2023</span><span class="tag tag-sand">★ 4.89</span><span class="tag tag-leaf">₹14,435/night</span><span class="tag tag-ocean">Corong Corong</span></div>
+    </div>
+
+    <!-- Listing 5: El Nido Penthouse -->
+    <div class="stay-card" style="margin-bottom:10px">
+      <div class="stay-header">
+        <div>
+          <div class="stay-name">The El Nido Penthouse</div>
+          <div class="stay-desc">Flat in El Nido · 1 king bed · Guest favourite · ★ 4.95 · Second highest rating on the list. Boutique, minimalist interiors with warm wood and arch detailing. El Nido town location — walkable to everything. Great views implied by the name.</div>
+        </div>
+        <div class="stay-price" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);box-shadow:0 3px 12px rgba(124,58,237,0.35)">
+          <span class="amount">₹46,340</span><span class="per">3 nights</span>
+        </div>
+      </div>
+      <div class="tags"><span class="tag tag-purple">Guest favourite</span><span class="tag tag-sand">★ 4.95</span><span class="tag tag-leaf">₹15,447/night</span><span class="tag tag-ocean">Town centre</span></div>
+    </div>
+
+    <!-- Listing 6: Beachfront Villa -->
+    <div class="stay-card" style="border-color:rgba(251,191,36,0.4);position:relative;overflow:visible;margin-bottom:10px">
+      <div class="top-badge" style="background:linear-gradient(135deg,#d97706,#f59e0b)">🌅 Splurge pick</div>
+      <div class="stay-header" style="margin-top:8px">
+        <div>
+          <div class="stay-name">Beachfront Home — Pool, Full Kitchen, Solar</div>
+          <div class="stay-desc">Villa in El Nido · 1 queen bed · Guest favourite · ★ 4.99 · Highest rated listing. The sunset-from-the-sofa photo is real — direct beachfront, pool, full kitchen, solar-powered. Dates show 8–11 Jun so check availability for 9–12. Worth enquiring about a 1-day extension if it's available. The ultimate El Nido Airbnb.</div>
+        </div>
+        <div class="stay-price" style="background:linear-gradient(135deg,#d97706,#f59e0b);box-shadow:0 3px 12px rgba(217,119,6,0.35)">
+          <span class="amount">₹64,913</span><span class="per">3 nights</span>
+        </div>
+      </div>
+      <div class="tags"><span class="tag tag-coral">★ 4.99 highest rated</span><span class="tag tag-sand">₹21,638/night</span><span class="tag tag-leaf">Beachfront · Pool</span><span class="tag tag-purple">⚠ Check Jun 9–12 avail.</span></div>
+    </div>
+
+    <div class="stay-card" style="background:rgba(255,237,213,0.4);border-color:rgba(245,158,11,0.25);margin-bottom:0">
+      <div class="stay-name" style="margin-bottom:6px;font-size:13px">💡 Which to pick?</div>
+      <div class="stay-desc"><strong>Best value:</strong> Blued Apartment (₹15,703 total, Superhost). <strong>Most convenient:</strong> Cozy Room in town (walk to tours). <strong>Best vibe:</strong> Amelia Room at Colibris Corner (Nat Geo Luxury, Corong Corong). <strong>Best splurge:</strong> Beachfront Villa (★ 4.99, pool, direct beach — if available for Jun 9–12).</div>
+    </div>
+
+    <!-- ISLAND HOPPING TOURS -->
+    <div class="section-title en-accent">⛵ Island hopping tours</div>
+
+    <div class="warn-box" style="border-color:rgba(8,145,178,0.3);background:rgba(207,250,254,0.35);color:#0e4f5a">
+      ⚠ <strong style="color:#0e7490">One-time eco-fee ₱400/person</strong> covers all tours for the entire stay. Pay on Day 1 — you won't pay again. All tours depart 9 AM from El Nido Town beach pier. Back by ~3–4 PM. June = some showers, but tours run unless seas are genuinely rough.
+    </div>
+
+    <div class="tour-big-grid">
+      <div class="tour-big-card must" style="position:relative;overflow:visible">
+        <div style="position:absolute;top:-10px;left:14px;background:linear-gradient(135deg,#0891b2,#22d3ee);color:white;font-size:11px;font-weight:800;padding:3px 12px;border-radius:99px">✦ Must-do</div>
+        <div style="margin-top:8px">
+          <div class="tb-title">Tour A — Lagoons & Beaches</div>
+          <div class="tb-subtitle">THE iconic El Nido tour · most popular</div>
+          <div class="tb-stop"><div class="tb-dot"></div>Big Lagoon — kayak through limestone walls (₱250 kayak hire)</div>
+          <div class="tb-stop"><div class="tb-dot"></div>Small Lagoon — emerald water, dramatic cliffs</div>
+          <div class="tb-stop"><div class="tb-dot"></div>Secret Lagoon — hidden pool behind a rock crack</div>
+          <div class="tb-stop"><div class="tb-dot"></div>Shimizu Island — snorkeling, coral garden</div>
+          <div class="tb-stop"><div class="tb-dot"></div>Seven Commando Beach — long white sand lunch stop</div>
+          <div class="tb-foot">
+            <span style="font-size:11px;color:var(--text-muted)">~5–6h · departs 9 AM</span>
+            <span class="trans-price">₱1,200 + ₱350 extras/pax</span>
+          </div>
+        </div>
+      </div>
+      <div class="tour-big-card must" style="position:relative;overflow:visible">
+        <div style="position:absolute;top:-10px;left:14px;background:linear-gradient(135deg,#0891b2,#22d3ee);color:white;font-size:11px;font-weight:800;padding:3px 12px;border-radius:99px">✦ Must-do</div>
+        <div style="margin-top:8px">
+          <div class="tb-title">Tour C — Hidden Beaches & Shrines</div>
+          <div class="tb-subtitle">Best snorkeling + most dramatic scenery</div>
+          <div class="tb-stop"><div class="tb-dot"></div>Helicopter Island — iconic curved beach, aerial views</div>
+          <div class="tb-stop"><div class="tb-dot"></div>Secret Beach — swim through a rock tunnel to reach it</div>
+          <div class="tb-stop"><div class="tb-dot"></div>Hidden Beach — secluded cove, turquoise water</div>
+          <div class="tb-stop"><div class="tb-dot"></div>Matinloc Shrine — abandoned hilltop church, panoramic view</div>
+          <div class="tb-stop"><div class="tb-dot"></div>Star Beach — vibrant coral reef snorkeling</div>
+          <div class="tb-foot">
+            <span style="font-size:11px;color:var(--text-muted)">~5–6h · strong swimmers advised</span>
+            <span class="trans-price">₱1,200 + ₱200 extras/pax</span>
+          </div>
+        </div>
+      </div>
+      <div class="tour-big-card">
+        <div class="tb-title">Tour B — Sandbars & Caves</div>
+        <div class="tb-subtitle">Least crowded · good for rain days</div>
+        <div class="tb-stop"><div class="tb-dot" style="background:#6b7280"></div>Snake Island — sandbar walk, viewpoint hike</div>
+        <div class="tb-stop"><div class="tb-dot" style="background:#6b7280"></div>Cudugnon Cave — cathedral cave system</div>
+        <div class="tb-stop"><div class="tb-dot" style="background:#6b7280"></div>Pinagbuyutan Island — remote beach, few tourists</div>
+        <div class="tb-stop"><div class="tb-dot" style="background:#6b7280"></div>Entalula Beach — pristine white sand</div>
+        <div class="tb-foot">
+          <span style="font-size:11px;color:var(--text-muted)">Good rainy-day backup plan</span>
+          <span class="trans-price">₱1,200/pax</span>
+        </div>
+      </div>
+      <div class="tour-big-card">
+        <div class="tb-title">Tour D — Quiet Lagoons</div>
+        <div class="tb-subtitle">Most underrated · fewest tourists</div>
+        <div class="tb-stop"><div class="tb-dot" style="background:#6b7280"></div>Cadlao Lagoon — calm, remote, almost no one there</div>
+        <div class="tb-stop"><div class="tb-dot" style="background:#6b7280"></div>Paradise Beach — wide white sand, very peaceful</div>
+        <div class="tb-stop"><div class="tb-dot" style="background:#6b7280"></div>Nat Nat Beach — hidden gem</div>
+        <div class="tb-stop"><div class="tb-dot" style="background:#6b7280"></div>Pasandigan Beach</div>
+        <div class="tb-foot">
+          <span style="font-size:11px;color:var(--text-muted)">Only if A + C are done</span>
+          <span class="trans-price">₱1,200/pax</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OTHER ACTIVITIES -->
+    <div class="section-title en-accent">🌊 Other activities</div>
+
+    <div class="act-section">
+      <div class="act-pill-grid">
+        <div class="act-pill">🏄 <strong>Duli Beach surfing</strong> <span class="cost">· ₱300–500/hr + instructor · 30 min north (Shridhar)</span></div>
+        <div class="act-pill">🌅 <strong>Las Cabañas sunset</strong> <span class="cost">· best in El Nido · trike from Corong Corong</span></div>
+        <div class="act-pill">🏖 <strong>Nacpan Beach day</strong> <span class="cost">· twin white sand beaches · 40 min north by scooter</span></div>
+        <div class="act-pill">🧗 <strong>Taraw Cliff via ferrata</strong> <span class="cost">· ₱500 guide · panoramic Bacuit Bay view (Shridhar)</span></div>
+        <div class="act-pill">🛵 <strong>Scooter hire</strong> <span class="cost">· ₱600–800/day · unlocks Nacpan + Duli independently</span></div>
+        <div class="act-pill">🍽 <strong>Altrove Restaurant</strong> <span class="cost">· best restaurant in El Nido · Italian, El Nido + Corong Corong</span></div>
+        <div class="act-pill">🍹 <strong>Calle Hama bar strip</strong> <span class="cost">· El Nido Town's nightlife hub · 5 min trike</span></div>
+        <div class="act-pill">🌊 <strong>Corong Corong sunset stroll</strong> <span class="cost">· free · every evening from your Airbnb</span></div>
+      </div>
+    </div>
+
+    <!-- DAY PLAN -->
+    <div class="section-title en-accent">🗓 Suggested 3.5-day plan</div>
+
+    <div class="day-plan">
+      <div class="dp-row">
+        <div class="dp-day">Jun 9 night</div>
+        <div class="dp-content">Arrive ~9:30–10 PM by van. Tricycle to Airbnb (₱100). Light dinner at a beachside spot in Corong Corong. Rest — big days ahead.<div class="dp-sub">First impression of El Nido at night — the bay is stunning even after dark.</div></div>
+      </div>
+      <div class="dp-row">
+        <div class="dp-day">Jun 10 — Day 1</div>
+        <div class="dp-content">Morning: <strong>Tour A</strong> — Big Lagoon, Secret Lagoon, Seven Commando Beach. Departs 9 AM from town pier (5 min trike). Back by 4 PM.<div class="dp-sub">Evening: Las Cabañas sunset (leave by 5 PM). Dinner at Altrove El Nido.</div></div>
+      </div>
+      <div class="dp-row">
+        <div class="dp-day">Jun 11 — Day 2</div>
+        <div class="dp-content">Morning: <strong>Duli Beach</strong> — scooter up (30 min). Shridhar surfs, Pooja relaxes on one of Palawan's best empty beaches. Lunch at the beach shacks.<div class="dp-sub">Afternoon: chill or explore Nacpan on the way back. Evening: Calle Hama for drinks, dinner in town.</div></div>
+      </div>
+      <div class="dp-row">
+        <div class="dp-day">Jun 12 — Day 3</div>
+        <div class="dp-content">Morning: <strong>Tour C</strong> — Helicopter Island, Secret Beach, Hidden Beach, Matinloc Shrine. The dramatic one. Departs 9 AM.<div class="dp-sub">Back by 3:30–4 PM. Pack, settle Airbnb. Depart 12:30 PM ferry to Coron — so Tour C must be Day 2 if ferry is booked morning slot. Adjust based on ferry timing.</div></div>
+      </div>
+    </div>
+
+    <div class="warn-box" style="border-color:rgba(8,145,178,0.3);background:rgba(207,250,254,0.35);color:#0e4f5a">
+      ⚠ <strong style="color:#0e7490">June weather note:</strong> Island hopping tours typically still run in June, but operators cancel morning-of if seas are rough. Build no rigid back-to-back booking across tours. If Tour A gets cancelled on Day 1, do it on Day 2 and push Tour C to Day 3.
+    </div>
+
+    <!-- BUDGET -->
+    <div class="section-title en-accent">💰 Budget estimate — El Nido (3.5 days)</div>
+
+    <div class="budget-card en">
+      <div class="budget-row"><span class="budget-cat">PP → El Nido private van (El Nido Paradise, split 2)</span><span class="budget-amt">₱4,000 <span class="budget-note">each (~₹2,060)</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Airbnb — 3 nights (TBC by agent)</span><span class="budget-amt">₱4,500–12,000 <span class="budget-note">each (₹2,300–6,200)</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Tour A + eco-fee + kayak hire</span><span class="budget-amt">₱1,950 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Tour C + extras</span><span class="budget-amt">₱1,400 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Duli Beach surfing (Shridhar) / beach day (Pooja)</span><span class="budget-amt">₱500–1,500 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Scooter hire (1–2 days, shared)</span><span class="budget-amt">₱300–400 <span class="budget-note">each/day</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Food + drinks (3.5 days)</span><span class="budget-amt">₱3,000–5,000 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Tricycles + local transport</span><span class="budget-amt">₱500–700 <span class="budget-note">each</span></span></div>
+      <div class="budget-row total en-total"><span class="budget-cat">Total per person (excl. Airbnb)</span><span class="budget-amt">≈ ₱11,650–15,150 <span class="budget-note">~₹6,000–7,800</span></span></div>
+    </div>
+
+    <!-- TIPS -->
+    <div class="section-title en-accent">💡 Tips</div>
+    <div class="tips-grid">
+      <div class="tip-card"><strong>Book tours from your Airbnb</strong>Tour operators are everywhere in El Nido Town. No need to pre-book from India — just walk in on Day 1 morning (or ask your Airbnb host). Book 1 day ahead for the next day's tour.</div>
+      <div class="tip-card"><strong>Private tour is worth it</strong>₱7,000–8,000 for a private boat (just the two of them) vs ₱1,200 each shared. For 2 people the maths is close, and private means your own pace, fewer crowds at the lagoons. Ask operators on arrival.</div>
+      <div class="tip-card"><strong>Carry a dry bag</strong>Buy in El Nido Town for ₱300–400. Essential on the boats — everything gets wet. Your phone, wallet, camera need protection especially in June.</div>
+      <div class="tip-card"><strong>Go early at Big Lagoon</strong>The tour boats arrive in waves. Get to Big Lagoon first — by 10 AM it gets busy. Operators doing reverse-order tours avoid the crowd.</div>
+      <div class="tip-card"><strong>June = fewer tourists</strong>Low season means quieter beaches, lower Airbnb rates, more relaxed tours. Island hopping still happens — June is just the start of the wet season, not peak monsoon.</div>
+      <div class="tip-card"><strong>Tricycle to everything</strong>₱50–100 per trip around El Nido Town / Corong Corong. No Grab. Agree on the price before you get in. Your Airbnb host will have numbers for reliable drivers.</div>
+    </div>
+
+  </div>
+
+  <div class="footer-nav">
+    <button class="nav-btn btn-prev" onclick="showPage('pp')">← Puerto Princesa</button>
+    <button class="nav-btn" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:white;box-shadow:0 4px 20px rgba(124,58,237,0.4)" onclick="showPage('coron')">Coron → 🤿</button>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     CORON PAGE
+════════════════════════════════════════════ -->
+<div class="page" id="page-coron">
+<style>
+  .grad-coron{background:linear-gradient(135deg,#9d174d 0%,#db2777 50%,#f472b6 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .coron-card{background:linear-gradient(135deg,rgba(157,23,77,0.09),rgba(219,39,119,0.06));border:1.5px solid rgba(219,39,119,0.22)}
+  .coron-code{color:#9d174d}
+  .line-coron::before,.line-coron::after{background:linear-gradient(90deg,rgba(219,39,119,0.3),#db2777)}
+  .section-title.coron-accent::after{background:linear-gradient(90deg,rgba(219,39,119,0.3) 0%,transparent 100%)}
+  .coron-hero-eyebrow{color:#9d174d}
+  .coron-price-badge{background:linear-gradient(135deg,#9d174d,#db2777);box-shadow:0 3px 12px rgba(157,23,77,0.35)}
+
+  /* activity grid */
+  .coron-act-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
+  @media(max-width:560px){.coron-act-grid{grid-template-columns:1fr}}
+  .coron-act-card{background:var(--glass);border:1.5px solid var(--glass-border);border-radius:18px;padding:16px 18px;backdrop-filter:blur(12px);box-shadow:var(--sh-card);position:relative;overflow:hidden}
+  .coron-act-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:18px 18px 0 0}
+  .coron-act-card.shridhar::before{background:linear-gradient(90deg,#0891b2,#22d3ee)}
+  .coron-act-card.pooja::before{background:linear-gradient(90deg,#ec4899,#f9a8d4)}
+  .coron-act-card.both::before{background:linear-gradient(90deg,#9d174d,#f472b6)}
+  .coron-act-card.evening::before{background:linear-gradient(90deg,#1e293b,#475569)}
+  .ca-icon{font-size:24px;margin-bottom:8px;display:block}
+  .ca-name{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--text);margin-bottom:4px}
+  .ca-desc{font-size:12px;color:var(--text-soft);line-height:1.55;margin-bottom:10px}
+  .ca-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .ca-time{font-size:11px;font-weight:700;color:var(--text-muted)}
+  .ca-cost{font-size:11px;font-weight:800;padding:3px 10px;border-radius:99px;background:var(--sand);color:#92400e;border:1.5px solid #fcd34d}
+
+  /* island hop table */
+  .coron-tour-card{background:var(--glass);border:1.5px solid var(--glass-border);border-radius:18px;padding:16px 18px;backdrop-filter:blur(12px);box-shadow:var(--sh-card);margin-bottom:10px;position:relative;overflow:visible}
+  .coron-tour-card.featured{border-color:rgba(157,23,77,0.4)}
+  .ct-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;color:var(--text);margin-bottom:3px}
+  .ct-sub{font-size:11px;color:var(--text-muted);font-weight:700;margin-bottom:10px}
+  .ct-stop{display:flex;gap:6px;font-size:12px;color:var(--text-soft);padding:4px 0;border-bottom:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.1));align-items:flex-start}
+  .ct-stop:last-of-type{border-bottom:none}
+  .ct-dot{width:6px;height:6px;border-radius:50%;background:#db2777;flex-shrink:0;margin-top:4px}
+  .ct-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding-top:8px;border-top:0.5px solid var(--color-border-tertiary,rgba(0,0,0,0.1))}
+
+  /* ferry card */
+  .ferry-card{background:linear-gradient(135deg,rgba(157,23,77,0.09),rgba(219,39,119,0.06));border:1.5px solid rgba(219,39,119,0.22);border-radius:20px;padding:20px 22px;backdrop-filter:blur(14px);box-shadow:var(--sh-card);margin-bottom:12px}
+
+  /* person legend */
+</style>
+
+  <div class="hero">
+    <div class="hero-eyebrow coron-hero-eyebrow"><span>📍</span> Stop 4 of 5 · The unique one</div>
+    <h1><span class="float">🤿</span> <span class="grad-coron">Coron</span></h1>
+    <p class="hero-sub">Arrive Jun 12 evening via ferry · 2 days · Busuanga Island · WWII wrecks, Asia's clearest lake, hot springs, epic sunsets.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="icon">📅</span><div><span class="hero-stat-val">Jun 12–14</span><span class="hero-stat-lbl">2 days</span></div></div>
+      <div class="hero-stat"><span class="icon">🏘</span><div><span class="hero-stat-val">Coron Town</span><span class="hero-stat-lbl">only real hub</span></div></div>
+      <div class="hero-stat"><span class="icon">⛵</span><div><span class="hero-stat-val">Island hopping</span><span class="hero-stat-lbl">full day Jun 13</span></div></div>
+      <div class="hero-stat"><span class="icon">🌦</span><div><span class="hero-stat-val">~30°C</span><span class="hero-stat-lbl">June, occasional rain</span></div></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- SURFING NOTE -->
+    <div class="warn-box" style="border-color:rgba(8,145,178,0.3);background:rgba(207,250,254,0.4);color:#0e4f5a">
+      🏄 <strong style="color:#0e7490">On surfing in Coron:</strong> Coron/Busuanga isn't a surf destination — the geography doesn't produce surf breaks. That's El Nido's Duli Beach (already in the plan!) or Siargao. But Shridhar will be well looked after here — wreck snorkeling, cliff jumping at Barracuda Lake, kayaking Twin Lagoon, and the Tapyas hike are all legitimately adventurous. Coron is genuinely different from El Nido, which is the whole point of coming.
+    </div>
+
+    <!-- GETTING THERE -->
+    <div class="section-title coron-accent">⛴ Getting there — El Nido → Coron ferry</div>
+
+    <div class="ferry-card">
+      <div class="flight-route">
+        <div class="flight-stop"><div class="code coron-code">ENI</div><div class="time">12:00–12:30 PM</div><div class="city">El Nido pier</div></div>
+        <div class="flight-line">
+          <div class="airline">Atienza / Montenegro Lines · fast ferry</div>
+          <div class="line line-coron"><span class="plane">⛴</span></div>
+          <div class="dur">4–5h · scenic archipelago crossing</div>
+        </div>
+        <div class="flight-stop"><div class="code coron-code">USU</div><div class="time">4:30–5:30 PM</div><div class="city">Coron Town pier</div></div>
+      </div>
+      <div class="flight-tags" style="margin-top:10px">
+        <span class="ftag ftag-green">Jun 12 · departs 12:00–12:30 PM</span>
+        <span class="ftag ftag-amber">₱2,500–2,800 / person (~₹1,300–1,450)</span>
+        <span class="ftag ftag-blue">AC cabin + open deck · book via travel-palawan.com or Klook</span>
+      </div>
+    </div>
+
+    <div class="warn-box">
+      ⏱ <strong>Timing conflict to resolve:</strong> The ferry departs 12:30 PM. Tour C (El Nido) ends ~3:30–4 PM. These can't both happen on Jun 12. Two options: <strong>(A)</strong> Do Tour C on Jun 11, take ferry Jun 12 — this is the recommended approach. <strong>(B)</strong> Skip Tour C and do a relaxed Jun 12 morning in El Nido before the ferry. Confirm with Shridhar.
+    </div>
+
+    <div class="transit-box" style="margin-bottom:12px">
+      <div class="transit-title">🚐 Coron pier → Coron Town (on arrival)</div>
+      <div class="transit-body">Tricycles wait at the pier. ₱50–80 to any guesthouse in Coron Town. The town is tiny — 10 min max. <strong>No Grab.</strong> Airport (Busuanga USU) is 45 min away by shared minivan (~₱200) if flying in instead.</div>
+    </div>
+
+    <!-- WHERE TO STAY -->
+    <div class="section-title coron-accent">🏨 Where to stay</div>
+
+    <div class="warn-box" style="border-color:rgba(157,23,77,0.25);background:rgba(252,231,243,0.4);color:#831843">
+      📍 <strong style="color:#9d174d">Stay in Coron Town Proper — the only sensible base.</strong> All island hopping boats depart from Coron Town pier. Mt. Tapyas viewpoint is a 5-min walk. Maquinit Hot Springs is a 20-min tricycle. Anywhere else on Busuanga island means logistics pain.
+    </div>
+
+    <div class="wishlist-bar" style="border-color:rgba(157,23,77,0.25);background:rgba(252,231,243,0.3);margin-bottom:14px">
+      All listings for <strong>Jun 12–14 · 2 nights · 2 guests</strong> · Coron Town area.<br>
+      <strong>Airbnb Wishlist:</strong> <a href="https://www.airbnb.co.in/wishlists/invite/7793a051-c14f-4543-96fa-1875525f7a02" target="_blank" style="color:#9d174d;font-weight:700">View full wishlist ↗</a>
+      <span class="wishlist-url">https://www.airbnb.co.in/wishlists/invite/7793a051-c14f-4543-96fa-1875525f7a02</span>
+    </div>
+
+    <!-- Tier label: Budget -->
+    <div style="font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin:10px 0 8px;display:flex;align-items:center;gap:8px">Budget-friendly <span style="flex:1;height:1px;background:rgba(157,23,77,0.15)"></span></div>
+
+    <!-- Listing 1: Jan's Happy Home ★5.0 -->
+    <div class="stay-card" style="border-color:rgba(157,23,77,0.4);position:relative;overflow:visible;margin-bottom:10px">
+      <div class="top-badge" style="background:linear-gradient(135deg,#9d174d,#db2777)">⭐ Top pick</div>
+      <div class="stay-header" style="margin-top:8px">
+        <div>
+          <div class="stay-name">Jan's Happy Home — Cozy Studio</div>
+          <div class="stay-desc">Flat in Coron · 2 beds · Guest favourite · ★ 5.0 · Perfect score. Clean, modern studio — grey and slate palette, fresh linen, solid value. Jun 12–13 availability (1 night); check if extendable to 2 nights. Best-rated listing on the list at the lowest per-night price.</div>
+        </div>
+        <div class="stay-price" style="background:linear-gradient(135deg,#9d174d,#db2777);box-shadow:0 3px 12px rgba(157,23,77,0.35)">
+          <span class="amount">₹4,003</span><span class="per">1 night</span>
+        </div>
+      </div>
+      <div class="tags"><span class="tag tag-coral">★ 5.0 perfect</span><span class="tag tag-purple">Guest favourite</span><span class="tag tag-leaf">₹4,003/night</span><span class="tag tag-sand">⚠ Check 2-night avail.</span></div>
+    </div>
+
+    <!-- Listing 2: Nomad Yurts 8 ★4.94 -->
+    <div class="stay-card" style="margin-bottom:10px">
+      <div class="stay-header">
+        <div>
+          <div class="stay-name">Nomad Yurts 8</div>
+          <div class="stay-desc">Yurt in Coron · 1 bed · Guest favourite · ★ 4.94 · The most unique stay on the whole trip — a proper yurt with domed lattice ceiling and boho-textiles interior. One of a kind. Jun 12–13 availability; check if extendable. Only listing that can claim genuine character among the budget options.</div>
+        </div>
+        <div class="stay-price" style="background:linear-gradient(135deg,#9d174d,#db2777);box-shadow:0 3px 12px rgba(157,23,77,0.35)">
+          <span class="amount">₹3,966</span><span class="per">1 night</span>
+        </div>
+      </div>
+      <div class="tags"><span class="tag tag-purple">Guest favourite</span><span class="tag tag-sand">★ 4.94</span><span class="tag tag-leaf">Yurt — most unique stay</span><span class="tag tag-ocean">₹3,966/night</span></div>
+    </div>
+
+    <!-- Listing 3: Seaview Chalet ★4.95 -->
+    <div class="stay-card" style="margin-bottom:10px">
+      <div class="stay-header">
+        <div>
+          <div class="stay-name">Charming Seaview Chalet with AC</div>
+          <div class="stay-desc">Home in Coron · 1 double bed · Guest favourite · ★ 4.95 · Open wooden deck overlooking tropical gardens — that outdoor dining table photo is excellent. Seaview + AC + chalet character. Jun 12–13 (1 night shown); check 2-night availability. Strong contender.</div>
+        </div>
+        <div class="stay-price" style="background:linear-gradient(135deg,#9d174d,#db2777);box-shadow:0 3px 12px rgba(157,23,77,0.35)">
+          <span class="amount">₹3,426</span><span class="per">1 night</span>
+        </div>
+      </div>
+      <div class="tags"><span class="tag tag-purple">Guest favourite</span><span class="tag tag-sand">★ 4.95</span><span class="tag tag-ocean">Seaview deck</span><span class="tag tag-leaf">Cheapest/night</span></div>
+    </div>
+
+    <!-- Listing 4: Whole comfort house ★4.93 -->
+    <div class="stay-card" style="margin-bottom:10px">
+      <div class="stay-header">
+        <div>
+          <div class="stay-name">Whole Comfort House in Nature</div>
+          <div class="stay-desc">Home in Coron · 1 bed · Guest favourite · ★ 4.93 · The only listing showing full 2-night availability (Jun 12–14) — no check-availability faff. Whole house, jungle/nature setting, modern construction. ₹6,708 for both nights is excellent value for a whole house.</div>
+        </div>
+        <div class="stay-price" style="background:linear-gradient(135deg,#9d174d,#db2777);box-shadow:0 3px 12px rgba(157,23,77,0.35)">
+          <span class="amount">₹6,708</span><span class="per">2 nights</span>
+        </div>
+      </div>
+      <div class="tags"><span class="tag tag-purple">Guest favourite</span><span class="tag tag-sand">★ 4.93</span><span class="tag tag-coral">✓ 2-night availability confirmed</span><span class="tag tag-leaf">Whole house · ₹3,354/night</span></div>
+    </div>
+
+    <!-- Listing 5: Tinir Transient Inn ★4.73 -->
+    <div class="stay-card" style="margin-bottom:10px">
+      <div class="stay-header">
+        <div>
+          <div class="stay-name">Tinir Transient Inn — Coron Town</div>
+          <div class="stay-desc">Flat in Coron · 3 beds · ★ 4.73 · Bright, white interiors — clean and airy but more inn-style than homey. 3 beds makes it spacious. Jun 12–13 (1 night shown). Lowest rating of the five but still solid. Good fallback if others are unavailable for 2 nights.</div>
+        </div>
+        <div class="stay-price" style="background:linear-gradient(135deg,#9d174d,#db2777);box-shadow:0 3px 12px rgba(157,23,77,0.35)">
+          <span class="amount">₹5,500</span><span class="per">1 night</span>
+        </div>
+      </div>
+      <div class="tags"><span class="tag tag-sand">★ 4.73</span><span class="tag tag-leaf">3 beds · most space</span><span class="tag tag-ocean">Coron Town</span></div>
+    </div>
+
+    <div class="stay-card" style="background:rgba(255,237,213,0.4);border-color:rgba(245,158,11,0.25);margin-bottom:0">
+      <div class="stay-name" style="margin-bottom:6px;font-size:13px">💡 Which to pick?</div>
+      <div class="stay-desc"><strong>Easiest booking:</strong> Whole Comfort House (2-night availability confirmed, ★4.93). <strong>Most unique:</strong> Nomad Yurts 8 (★4.94, yurt — nothing else on the trip like it). <strong>Best value/night:</strong> Seaview Chalet (₹3,426/night, ★4.95). <strong>Perfect score:</strong> Jan's Happy Home (★5.0 — check 2-night extension).</div>
+    </div>
+
+    <!-- ACTIVITIES -->
+    <div class="section-title coron-accent">🗓 Activities — for both</div>
+
+    <!-- HEADLINE: ISLAND HOPPING -->
+    <div class="coron-tour-card featured" style="margin-top:6px;position:relative;overflow:visible">
+      <div style="position:absolute;top:-10px;left:14px;background:linear-gradient(135deg,#9d174d,#db2777);color:white;font-size:11px;font-weight:800;padding:3px 12px;border-radius:99px;box-shadow:0 2px 8px rgba(157,23,77,0.35)">✦ Full Day · Must-do</div>
+      <div style="margin-top:10px">
+        <div class="ct-title">Coron Island Hopping — the big day</div>
+        <div class="ct-sub">Jun 13 · departs 9 AM from Coron Town pier · returns ~4–5 PM</div>
+        <div class="ct-stop"><div class="ct-dot"></div><strong>Kayangan Lake</strong> — Asia's clearest lake. Crystal blue water inside a limestone island. The signature Coron shot. 15 min hike to the viewpoint first.</div>
+        <div class="ct-stop"><div class="ct-dot"></div><strong>Twin Lagoon</strong> — kayak through a narrow rock hole into a hidden lagoon (Shridhar). Floating in warm saltwater surrounded by cliffs (Pooja).</div>
+        <div class="ct-stop"><div class="ct-dot"></div><strong>Barracuda Lake</strong> — thermocline diving/snorkeling. Temperature changes dramatically at depth. Cliff jumping spot nearby for Shridhar.</div>
+        <div class="ct-stop"><div class="ct-dot"></div><strong>WWII Japanese wreck snorkeling</strong> — Okikawa Maru and Skeleton Wreck. Shallow enough to snorkel. Completely unique — nothing like this anywhere on the trip.</div>
+        <div class="ct-stop"><div class="ct-dot"></div><strong>Malcapuya Island or Banana Island</strong> — white sand lunch stop. As good as El Nido beaches, far fewer people.</div>
+        <div class="ct-foot">
+          <span style="font-size:11px;color:var(--text-muted)">Shared boat ~₱1,500–2,000/pax · Private boat ~₱6,000–8,000 total</span>
+          <span class="ca-cost">Book from your guesthouse Day 1</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="coron-act-grid">
+
+      <div class="coron-act-card both">
+        <span class="ca-icon">🏔</span>
+        <div class="ca-name">Mt. Tapyas viewpoint</div>
+        
+        <div class="ca-desc">723 steps straight up but the payoff is the best sunset view in Coron — Busuanga island, the bay, and the karst silhouettes. Go up around 5 PM. Free. 10 min walk from Coron Town center.</div>
+        <div class="ca-footer"><span class="ca-time">Best at 5–6:30 PM</span><span class="ca-cost">Free</span></div>
+      </div>
+
+      <div class="coron-act-card evening">
+        <span class="ca-icon">♨</span>
+        <div class="ca-name">Maquinit Hot Springs</div>
+        
+        <div class="ca-desc">World's only natural saltwater hot spring. 45°C water in a mangrove setting. Open until 9 PM — ideal after a full day of island hopping. Deeply relaxing. About 7 km from town (₱200 tricycle return).</div>
+        <div class="ca-footer"><span class="ca-time">Evening — after island hop</span><span class="ca-cost">₱200 entry + ₱200 trike</span></div>
+      </div>
+
+      <div class="coron-act-card shridhar">
+        <span class="ca-icon">🤿</span>
+        <div class="ca-name">Wreck snorkeling — WWII ships</div>
+        
+        <div class="ca-desc">Coron is world-famous for WWII Japanese shipwrecks. The Okikawa Maru is accessible by snorkel — you can see the hull, coral growth, fish colonies. Included on the main island hopping tour. Surreal experience.</div>
+        <div class="ca-footer"><span class="ca-time">Part of island hopping</span><span class="ca-cost">Included</span></div>
+      </div>
+
+      <div class="coron-act-card pooja">
+        <span class="ca-icon">🏖</span>
+        <div class="ca-name">Malcapuya + Banana Island beaches</div>
+        
+        <div class="ca-desc">Remote white sand islands — far less crowded than El Nido beaches. Malcapuya in particular is often cited as one of the best beaches in all of Palawan. Crystal water, shallow lagoon, great for swimming.</div>
+        <div class="ca-footer"><span class="ca-time">Part of island hopping</span><span class="ca-cost">Included</span></div>
+      </div>
+
+      <div class="coron-act-card shridhar">
+        <span class="ca-icon">🧗</span>
+        <div class="ca-name">Cliff jumping at Barracuda Lake</div>
+        
+        <div class="ca-desc">There's a natural cliff jumping spot near Barracuda Lake on the island hopping circuit. Not officially organised but guides know it — just ask. Water is warm and deep. Good adrenaline moment mid-tour.</div>
+        <div class="ca-footer"><span class="ca-time">Part of island hopping</span><span class="ca-cost">Free (ask guide)</span></div>
+      </div>
+
+      <div class="coron-act-card pooja">
+        <span class="ca-icon">🚣</span>
+        <div class="ca-name">Kayaking — Twin Lagoon</div>
+        
+        <div class="ca-desc">Twin Lagoon is accessible only by ducking through a low rock tunnel at low tide — kayak or swim through to reveal a completely hidden lagoon. Calm, warm, impossibly clear water. Dreamy experience.</div>
+        <div class="ca-footer"><span class="ca-time">Part of island hopping</span><span class="ca-cost">Kayak hire ~₱200</span></div>
+      </div>
+
+      <div class="coron-act-card both">
+        <span class="ca-icon">🌅</span>
+        <div class="ca-name">Coron Town evening + seafood dinner</div>
+        
+        <div class="ca-desc">Coron Town is small but has a good cluster of restaurants along the waterfront. LNB Bistro and La Sirenetta are well-rated. Fresh seafood is excellent and cheap. Much quieter nightlife than El Nido — more of a chill evening.</div>
+        <div class="ca-footer"><span class="ca-time">Both evenings</span><span class="ca-cost">₱400–800/pax dinner</span></div>
+      </div>
+
+      <div class="coron-act-card both">
+        <span class="ca-icon">🛶</span>
+        <div class="ca-name">Lake Cayangan morning kayak (DIY)</div>
+        
+        <div class="ca-desc">If they want a second day on the water without a full group tour, some operators do a private Kayangan Lake-only trip in the morning. Fewer people before 10 AM. Rent kayaks and paddle the lake at your own pace.</div>
+        <div class="ca-footer"><span class="ca-time">Jun 14 morning (optional)</span><span class="ca-cost">₱600–800/pax</span></div>
+      </div>
+
+    </div>
+
+    <!-- 2-DAY PLAN -->
+    <div class="section-title coron-accent">🗓 2-day plan</div>
+
+    <div class="day-plan">
+      <div class="dp-row">
+        <div class="dp-day">Jun 12 eve</div>
+        <div class="dp-content">Ferry arrives Coron ~4:30–5:30 PM. Tricycle to Airbnb. Quick freshen up, then walk up Mt. Tapyas for sunset (leave by 5:30 PM — it's close). Seafood dinner at the waterfront.<div class="dp-sub">First impression of Coron: smaller, quieter, more raw than El Nido. Different vibe entirely.</div></div>
+      </div>
+      <div class="dp-row">
+        <div class="dp-day">Jun 13</div>
+        <div class="dp-content"><strong>Full island hopping day</strong> — Kayangan Lake, Twin Lagoon, Barracuda Lake, wreck snorkeling, beach lunch at Malcapuya. Departs 9 AM, back by 4–5 PM.<div class="dp-sub">Evening: Maquinit Hot Springs (must-do). ₱200 trike, soak until 8 PM. Late dinner back in town.</div></div>
+      </div>
+      <div class="dp-row">
+        <div class="dp-day">Jun 14</div>
+        <div class="dp-content">Morning free — optional Kayangan kayak or sleep in. Check out. Catch the <strong>Busuanga (USU) → Cebu (CEB) flight</strong> — departs ~8:55 AM or later slots. Airport is 45 min from town; leave by 7 AM for the early flight.<div class="dp-sub">The Busuanga airport is tiny — worth the early wake up to get there stress-free.</div></div>
+      </div>
+    </div>
+
+    <!-- ONWARD FLIGHT -->
+    <div class="section-title coron-accent">✈ Onward — Busuanga to Cebu</div>
+
+    <div class="flight-card coron-card">
+      <div class="flight-route">
+        <div class="flight-stop"><div class="code coron-code">USU</div><div class="time">~8:55 AM</div><div class="city">Busuanga Airport</div></div>
+        <div class="flight-line">
+          <div class="airline">Cebgo (Cebu Pacific) / PAL · ~1h 20m</div>
+          <div class="line line-coron"><span class="plane">✈</span></div>
+          <div class="dur">~3 daily departures</div>
+        </div>
+        <div class="flight-stop"><div class="code coron-code">CEB</div><div class="time">~10:15 AM</div><div class="city">Cebu (Mactan)</div></div>
+      </div>
+      <div class="flight-tags" style="margin-top:10px">
+        <span class="ftag ftag-amber">Book NOW — only ~6 flights/day total, sells out</span>
+        <span class="ftag ftag-blue">Cebgo / Philippine Airlines / Sunlight Air</span>
+        <span class="ftag ftag-green">~₹3,500–5,500/person · ~1h 20m</span>
+      </div>
+    </div>
+
+    <!-- BUDGET -->
+    <div class="section-title coron-accent">💰 Budget estimate — Coron (2 days)</div>
+
+    <div class="budget-card" style="background:linear-gradient(135deg,rgba(157,23,77,0.08),rgba(244,114,182,0.05));border:1.5px solid rgba(219,39,119,0.18)">
+      <div class="budget-row"><span class="budget-cat">El Nido → Coron ferry</span><span class="budget-amt">₱2,600 <span class="budget-note">each (~₹1,350)</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Airbnb — 2 nights (TBC by agent)</span><span class="budget-amt">₱3,000–7,000 <span class="budget-note">each/night</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Island hopping tour (shared boat)</span><span class="budget-amt">₱1,500–2,000 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Maquinit Hot Springs + trike</span><span class="budget-amt">₱400 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Mt. Tapyas sunset</span><span class="budget-amt">Free</div>
+      <div class="budget-row"><span class="budget-cat">Food + drinks (2 days)</span><span class="budget-amt">₱2,000–3,500 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Tricycles around Coron</span><span class="budget-amt">₱300–500 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">USU → CEB flight</span><span class="budget-amt">₹3,500–5,500 <span class="budget-note">each</span></span></div>
+      <div class="budget-row total" style="background:rgba(157,23,77,0.09)"><span class="budget-cat">Total per person (excl. Airbnb)</span><span class="budget-amt">≈ ₱6,800–9,000 + ₹5,000 flight <span class="budget-note">~₹8,500–10,000 all in</span></span></div>
+    </div>
+
+    <!-- TIPS -->
+    <div class="section-title coron-accent">💡 Tips</div>
+    <div class="tips-grid">
+      <div class="tip-card"><strong>Book Busuanga→Cebu flight NOW</strong>This is the most time-sensitive booking on the trip. Only ~6 flights/day across all operators. Cebgo (Cebu Pacific subsidiary), PAL, and Sunlight Air. Book immediately if not already done.</div>
+      <div class="tip-card"><strong>Private boat is worth it in Coron</strong>₱6,000–8,000 for a private boat (just the two of them) vs ₱1,500–2,000 each shared. For 2 people the maths is close. Private means your own guide, own pace, can linger at Kayangan Lake before the crowds arrive.</div>
+      <div class="tip-card"><strong>Go to Kayangan Lake FIRST</strong>Tour boats arrive in waves. If your guide takes you to Kayangan first (before 10 AM), you'll have it mostly to yourselves. Insist on this when booking.</div>
+      <div class="tip-card"><strong>Maquinit Hot Springs timing</strong>Go in the evening — soaking in 45°C water in direct midday sun is not enjoyable. After the island hopping tour (5–6 PM) is perfect. Bring a towel.</div>
+      <div class="tip-card"><strong>Coron is cash-heavy</strong>Most guesthouses, tour operators, and restaurants prefer cash. Withdraw PHP in Coron Town before heading anywhere. There are ATMs in town but limited.</div>
+      <div class="tip-card"><strong>Airport is far — don't underestimate</strong>Busuanga Airport (USU) is 45 min from Coron Town. For the early flight on Jun 14, leave the guesthouse by 7 AM. Book a trike the night before — don't rely on finding one at 6:45 AM.</div>
+    </div>
+
+  </div>
+
+  <div class="footer-nav">
+    <button class="nav-btn btn-prev" onclick="showPage('elnido')">← El Nido</button>
+    <button class="nav-btn" style="background:linear-gradient(135deg,#d97706,#fbbf24);color:white;box-shadow:0 4px 20px rgba(217,119,6,0.4)" onclick="showPage('cebu')">Cebu → 🌊</button>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     CEBU PAGE
+════════════════════════════════════════════ -->
+<div class="page" id="page-cebu">
+<style>
+  .grad-cebu{background:linear-gradient(135deg,#d97706 0%,#f59e0b 40%,#fbbf24 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .cebu-accent::after{background:linear-gradient(90deg,rgba(217,119,6,0.3) 0%,transparent 100%) !important}
+  .cebu-code{color:#92400e}
+  .line-cebu::before,.line-cebu::after{background:linear-gradient(90deg,rgba(217,119,6,0.3),#d97706)}
+  .cebu-flight-card{background:linear-gradient(135deg,rgba(217,119,6,0.10),rgba(251,191,36,0.07));border:1.5px solid rgba(217,119,6,0.25)}
+  .cebu-price{background:linear-gradient(135deg,#d97706,#f59e0b);box-shadow:0 3px 12px rgba(217,119,6,0.35)}
+
+  .cebu-act-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
+  @media(max-width:560px){.cebu-act-grid{grid-template-columns:1fr}}
+  .cebu-card{background:var(--glass);border:1.5px solid var(--glass-border);border-radius:18px;padding:16px 18px;backdrop-filter:blur(12px);box-shadow:var(--sh-card);position:relative;overflow:hidden}
+  .cebu-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:18px 18px 0 0}
+  .cebu-card.morning::before{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
+  .cebu-card.culture::before{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
+  .cebu-card.relax::before{background:linear-gradient(90deg,#ec4899,#f9a8d4)}
+  .cebu-card.shop::before{background:linear-gradient(90deg,#0891b2,#22d3ee)}
+  .cebu-card.night::before{background:linear-gradient(90deg,#1e293b,#475569)}
+  .cebu-card.food::before{background:linear-gradient(90deg,#d97706,#fbbf24)}
+  .cc-icon{font-size:24px;margin-bottom:8px;display:block}
+  .cc-name{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--text);margin-bottom:5px;line-height:1.3}
+  .cc-desc{font-size:12px;color:var(--text-soft);line-height:1.55;margin-bottom:10px}
+  .cc-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .cc-time{font-size:11px;font-weight:700;color:var(--text-muted)}
+  .cc-cost{font-size:11px;font-weight:800;padding:3px 10px;border-radius:99px;background:var(--sand);color:#92400e;border:1.5px solid #fcd34d}
+</style>
+
+  <div class="hero">
+    <div class="hero-eyebrow" style="color:#92400e"><span>📍</span> Stop 5 of 5 · The finale</div>
+    <h1><span class="float">🌊</span> <span class="grad-cebu">Cebu</span></h1>
+    <p class="hero-sub">Arrive Jun 14 midday · 1.5 days · IT Park / Ayala base · history, shopping, nightlife, Tops Lookout, lechon. Then fly home.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="icon">📅</span><div><span class="hero-stat-val">Jun 14–15</span><span class="hero-stat-lbl">1.5 days</span></div></div>
+      <div class="hero-stat"><span class="icon">🏘</span><div><span class="hero-stat-val">IT Park / Ayala</span><span class="hero-stat-lbl">recommended base</span></div></div>
+      <div class="hero-stat"><span class="icon">🍖</span><div><span class="hero-stat-val">Lechon Cebu</span><span class="hero-stat-lbl">non-negotiable</span></div></div>
+      <div class="hero-stat"><span class="icon">🌦</span><div><span class="hero-stat-val">~31°C</span><span class="hero-stat-lbl">June, Grab everywhere</span></div></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- GETTING THERE -->
+    <div class="section-title cebu-accent">✈ Getting there — Busuanga to Cebu</div>
+
+    <div class="flight-card cebu-flight-card">
+      <div class="flight-route">
+        <div class="flight-stop"><div class="code cebu-code">USU</div><div class="time">3:00 PM</div><div class="city">Francisco B. Reyes Airport (Busuanga)</div></div>
+        <div class="flight-line">
+          <div class="airline">Sunlight Air · 2R 852 · Economy</div>
+          <div class="line line-cebu"><span class="plane">✈</span></div>
+          <div class="dur">2h</div>
+        </div>
+        <div class="flight-stop"><div class="code cebu-code">CEB</div><div class="time">5:00 PM</div><div class="city">Mactan-Cebu International Airport</div></div>
+      </div>
+      <div class="flight-tags" style="margin-top:10px">
+        <span class="ftag ftag-amber">Fri Jun 14 · Sunlight Air 2R 852</span>
+        <span class="ftag ftag-amber">₹7,766 / person</span>
+        <span class="ftag ftag-green">1 free carry-on · checked bag at extra cost</span>
+        <span class="ftag ftag-blue">Airport is on Mactan Island · 30–45 min Grab to IT Park</span>
+      </div>
+    </div>
+
+    <div class="transit-box" style="margin-bottom:12px">
+      <div class="transit-title">🚗 Airport → IT Park / Ayala (on arrival)</div>
+      <div class="transit-body"><strong>Grab is widely available in Cebu — use it for everything.</strong> Airport to IT Park is ~30–45 min depending on traffic (₱250–400). Landing at 5 PM means you arrive at your Airbnb by 6 PM — enough time to freshen up and head straight into the evening.</div>
+    </div>
+
+    <!-- WHERE TO STAY -->
+    <div class="section-title cebu-accent">🏨 Where to stay</div>
+
+    <div class="warn-box" style="border-color:rgba(217,119,6,0.3);background:rgba(254,243,199,0.5);color:#78350f">
+      📍 <strong style="color:#92400e">Stay in IT Park or Ayala Center area — the best base for 1.5 days.</strong> <strong>IT Park:</strong> 24/7 food scene, Sugbo Mercado night market, best clubs (LIV Superclub), youthful energy. <strong>Ayala:</strong> polished, walkable, upscale mall directly accessible, quieter nights. Both are 5–10 min apart by Grab. Either works — IT Park edges it for nightlife, Ayala for shopping convenience.
+    </div>
+
+    <div class="wishlist-bar" style="border-color:rgba(217,119,6,0.25);background:rgba(254,243,199,0.4);margin-bottom:14px">
+      All listings for <strong>Jun 14–15 · 1 night · 2 guests</strong> · Cebu City.<br>
+      <strong>Airbnb Wishlist:</strong> <a href="https://www.airbnb.co.in/wishlists/invite/84513ebc-79e0-4eab-b023-085f681209ca" target="_blank" style="color:#d97706;font-weight:700">View full wishlist ↗</a>
+      <span class="wishlist-url">https://www.airbnb.co.in/wishlists/invite/84513ebc-79e0-4eab-b023-085f681209ca</span>
+    </div>
+
+    <!-- Listing 1: Spacious City-View Mabolo ★5.0 -->
+    <div class="stay-card" style="border-color:rgba(217,119,6,0.4);position:relative;overflow:visible;margin-bottom:10px">
+      <div class="top-badge" style="background:linear-gradient(135deg,#d97706,#f59e0b)">⭐ Top pick</div>
+      <div class="stay-header" style="margin-top:8px">
+        <div>
+          <div class="stay-name">Spacious City-View Apartment — Mabolo</div>
+          <div class="stay-desc">Flat in Mabolo · 4 beds · Guest favourite (trophy) · ★ 5.0 · Perfect score. Moody, orange-lit evening vibes — city lights through floor-to-ceiling windows. 4 beds for 2 people means serious space. Mabolo is between IT Park and Ayala — walking distance to both. Best choice for the last night.</div>
+        </div>
+        <div class="stay-price" style="background:linear-gradient(135deg,#d97706,#f59e0b);box-shadow:0 3px 12px rgba(217,119,6,0.35)">
+          <span class="amount">₹4,779</span><span class="per">1 night</span>
+        </div>
+      </div>
+      <div class="tags"><span class="tag tag-coral">★ 5.0 perfect</span><span class="tag tag-purple">Guest favourite</span><span class="tag tag-leaf">City views · 4 beds</span><span class="tag tag-ocean">Mabolo — central</span></div>
+    </div>
+
+    <!-- Listing 2: City View Studio Lahug ★4.9 -->
+    <div class="stay-card" style="margin-bottom:10px">
+      <div class="stay-header">
+        <div>
+          <div class="stay-name">City View Studio — Pool, Balcony, Near IT Park</div>
+          <div class="stay-desc">Apartment in Lahug · 1 bed · Guest favourite · ★ 4.9 · Pool + balcony + city views in Lahug, right next to IT Park. Industrial-chic interior, blue-lit ceiling fan, great nightlife access. The go-to if they want to stumble home from LIV Superclub on foot.</div>
+        </div>
+        <div class="stay-price" style="background:linear-gradient(135deg,#d97706,#f59e0b);box-shadow:0 3px 12px rgba(217,119,6,0.35)">
+          <span class="amount">₹3,931</span><span class="per">1 night</span>
+        </div>
+      </div>
+      <div class="tags"><span class="tag tag-purple">Guest favourite</span><span class="tag tag-sand">★ 4.9</span><span class="tag tag-leaf">Pool + balcony</span><span class="tag tag-ocean">Walk to IT Park clubs</span></div>
+    </div>
+
+    <!-- Listing 3: AVIDA Riala IT Park ★4.99 -->
+    <div class="stay-card" style="margin-bottom:10px">
+      <div class="stay-header">
+        <div>
+          <div class="stay-name">NEW — 31F AVIDA Riala IT Park (High-Speed WiFi)</div>
+          <div class="stay-desc">Flat in Kasambagan · 1 bed · Guest favourite (trophy) · ★ 4.99 · 31st floor in IT Park itself — city panoramas from high up. Warm boutique interiors, premium finish. Near-perfect rating. Highest floor of the lot. If they want a true high-rise last night with IT Park clubs literally downstairs, this is it.</div>
+        </div>
+        <div class="stay-price" style="background:linear-gradient(135deg,#d97706,#f59e0b);box-shadow:0 3px 12px rgba(217,119,6,0.35)">
+          <span class="amount">₹4,741</span><span class="per">1 night</span>
+        </div>
+      </div>
+      <div class="tags"><span class="tag tag-purple">Guest favourite</span><span class="tag tag-sand">★ 4.99</span><span class="tag tag-coral">31st floor · IT Park</span><span class="tag tag-leaf">Best city views</span></div>
+    </div>
+
+    <!-- Listing 4: Homey Studio Ayala ★4.83 -->
+    <div class="stay-card" style="margin-bottom:10px">
+      <div class="stay-header">
+        <div>
+          <div class="stay-name">Homey Studio — Near Ayala Mall Cebu</div>
+          <div class="stay-desc">Apartment in Mabolo · 2 beds · Guest favourite · ★ 4.83 · Infinity pool photo with Cebu skyline — that's the hero shot. Near Ayala Mall, perfect for Pooja's shopping. More relaxed energy than the IT Park options. Good pick if the priority is Ayala access + pool aesthetics over nightlife proximity.</div>
+        </div>
+        <div class="stay-price" style="background:linear-gradient(135deg,#d97706,#f59e0b);box-shadow:0 3px 12px rgba(217,119,6,0.35)">
+          <span class="amount">₹4,094</span><span class="per">1 night</span>
+        </div>
+      </div>
+      <div class="tags"><span class="tag tag-purple">Guest favourite</span><span class="tag tag-sand">★ 4.83</span><span class="tag tag-ocean">Near Ayala Mall</span><span class="tag tag-leaf">Infinity pool</span></div>
+    </div>
+
+    <div class="stay-card" style="background:rgba(255,237,213,0.4);border-color:rgba(245,158,11,0.25);margin-bottom:0">
+      <div class="stay-name" style="margin-bottom:6px;font-size:13px">💡 Which to pick?</div>
+      <div class="stay-desc"><strong>Best overall:</strong> Spacious City-View Mabolo (★5.0, 4 beds, central location). <strong>Best for nightlife:</strong> AVIDA Riala IT Park 31F (★4.99, clubs literally downstairs). <strong>Best value + pool:</strong> City View Studio Lahug (★4.9, ₹3,931, pool + balcony). <strong>Best for shopping:</strong> Homey Studio near Ayala (★4.83, infinity pool).</div>
+    </div>
+
+    <!-- ACTIVITIES -->
+    <div class="section-title cebu-accent">🗓 Activities — 1.5 days</div>
+
+    <!-- DAY 1 AFTERNOON (arrival day) -->
+    <div class="day-label"><span class="day-pill pill-blue" style="background:linear-gradient(135deg,#d97706,#f59e0b)">Jun 14 · arrive 6 PM</span> Evening — settle in + explore</div>
+
+    <div class="cebu-act-grid">
+      <div class="cebu-card food">
+        <span class="cc-icon">🍖</span>
+        <div class="cc-name">Lechon Cebu — first meal, non-negotiable</div>
+        <div class="cc-desc">Cebu lechon is the best in the Philippines — crispy skin, herb-stuffed belly, no sauce needed. Go to <strong>Rico's Lechon</strong> (SM Seaside, Ayala) or <strong>Zubuchon</strong> (IT Park area). Both are within Grab distance of your Airbnb. Anthony Bourdain called this the best pig he ever ate.</div>
+        <div class="cc-footer"><span class="cc-time">Dinner, Jun 14</span><span class="cc-cost">₱400–700/pax</span></div>
+      </div>
+      <div class="cebu-card night">
+        <span class="cc-icon">🌆</span>
+        <div class="cc-name">Sugbo Mercado night market</div>
+        <div class="cc-desc">IT Park's famous night food market. Local and international street food, cheap drinks, live music, al fresco vibe. Open until midnight. The best way to end an arrival day — casual, atmospheric, very Cebu. Good for Pooja's food exploration.</div>
+        <div class="cc-footer"><span class="cc-time">After dinner, Jun 14</span><span class="cc-cost">₱200–500/pax</span></div>
+      </div>
+    </div>
+
+    <!-- DAY 2 FULL DAY -->
+    <div class="day-label"><span class="day-pill pill-blue" style="background:linear-gradient(135deg,#d97706,#f59e0b)">Jun 15 · full day</span> History → shopping → Tops → nightlife</div>
+
+    <div class="cebu-act-grid">
+      <div class="cebu-card culture">
+        <span class="cc-icon">✝</span>
+        <div class="cc-name">Historic downtown morning — Magellan's Cross + Basilica + Fort</div>
+        <div class="cc-desc">Three major sites within walking distance of each other. <strong>Magellan's Cross</strong> — 1521, where Christianity began in the Philippines. <strong>Basilica del Santo Niño</strong> — oldest church in the country, stunning. <strong>Fort San Pedro</strong> — triangular Spanish bastion with bay views. Budget 2.5–3h. Go early (9 AM) before heat. All free or minimal entry.</div>
+        <div class="cc-footer"><span class="cc-time">9 AM – 12 PM</span><span class="cc-cost">Free – ₱30 entry</span></div>
+      </div>
+      <div class="cebu-card shop">
+        <span class="cc-icon">🛍</span>
+        <div class="cc-name">Shopping — Ayala Center Cebu</div>
+        <div class="cc-desc">Cebu's best mall — international brands, local designers, Terraces dining strip, money changers, supermarket. <strong>For Pooja:</strong> fashion, beauty, pasalubong (dried mango, otap, silverware). <strong>SM Seaside</strong> is the alternative — larger, has an observation tower with panoramic views. Both worth a visit.</div>
+        <div class="cc-footer"><span class="cc-time">Afternoon, post-lunch</span><span class="cc-cost">Budget as needed</span></div>
+      </div>
+      <div class="cebu-card food">
+        <span class="cc-icon">🌮</span>
+        <div class="cc-name">Lunch: Larsian BBQ at Fuente</div>
+        <div class="cc-desc">Open-air BBQ market near Fuente Osmeña Circle. Skewered meats and seafood, rice, local sauces — very cheap, very local. This is how Cebuanos eat. One of the most authentic food experiences in the city. Go for lunch to avoid peak heat.</div>
+        <div class="cc-footer"><span class="cc-time">Lunch, Jun 15</span><span class="cc-cost">₱200–350/pax</span></div>
+      </div>
+      <div class="cebu-card morning">
+        <span class="cc-icon">🏔</span>
+        <div class="cc-name">Tops Lookout — sunset panorama</div>
+        <div class="cc-desc">600m above Cebu City in the Busay Hills. 360° view of Cebu, Mactan Island, and the Visayas. Best at sunset (5:30–6:30 PM). Now has restaurants and bars on the hilltop — have sunset drinks up there. 30 min Grab from IT Park. ₱100 entrance. Worth it even if it's cloudy at ground level.</div>
+        <div class="cc-footer"><span class="cc-time">5–7 PM · Shridhar + Pooja</span><span class="cc-cost">₱100 entry + Grab ₱300</span></div>
+      </div>
+      <div class="cebu-card relax">
+        <span class="cc-icon">🏛</span>
+        <div class="cc-name">Temple of Leah (optional)</div>
+        <div class="cc-desc">Roman-style temple on a hilltop — the "Taj Mahal of Cebu," built by a local billionaire for his late wife. Kitschy, dramatic, great photo spot. On the way to/from Tops Lookout so easy to combine. No entrance fee.</div>
+        <div class="cc-footer"><span class="cc-time">Combine with Tops</span><span class="cc-cost">Free</span></div>
+      </div>
+      <div class="cebu-card night">
+        <span class="cc-icon">🎵</span>
+        <div class="cc-name">Nightlife — IT Park clubs or Mango Avenue</div>
+        <div class="cc-desc"><strong>IT Park:</strong> LIV Superclub (one of the biggest in the Philippines), Azotea, The Social — modern, expat crowd, EDM and house. <strong>Mango Avenue:</strong> more local, bar-hopping strip, livelier street vibe, cheaper drinks. Both 10 PM onwards. This is the last night — make it count.</div>
+        <div class="cc-footer"><span class="cc-time">10 PM onwards · last night!</span><span class="cc-cost">₱500–1,000 cover + drinks</span></div>
+      </div>
+    </div>
+
+    <!-- SHOPPING GUIDE -->
+    <div class="section-title cebu-accent">🛍 Shopping guide — what to bring home</div>
+
+    <div class="budget-card" style="background:linear-gradient(135deg,rgba(217,119,6,0.08),rgba(251,191,36,0.05));border:1.5px solid rgba(217,119,6,0.18)">
+      <div class="budget-row"><span class="budget-cat">🥭 Dried mango (Cebu)</span><span class="budget-amt">Best souvenir · ₱150–300/pack · available at Ayala + airport</span></div>
+      <div class="budget-row"><span class="budget-cat">🍪 Otap + Rosquillos (local biscuits)</span><span class="budget-amt">Packaged well for travel · ₱100–200 · Ayala supermarket</span></div>
+      <div class="budget-row"><span class="budget-cat">🪡 Rattan + woven goods</span><span class="budget-amt">Bags, placemats, baskets · Carbon Market or souvenir shops</span></div>
+      <div class="budget-row"><span class="budget-cat">🪙 Silverware + shell jewellery</span><span class="budget-amt">Mactan is known for guitar-making + shell crafts · Mactan Shrine area</span></div>
+      <div class="budget-row"><span class="budget-cat">👗 Local fashion brands</span><span class="budget-amt">Ayala Center Cebu · Pooja: Bench, Plains & Prints, Anthill Fabric Gallery</span></div>
+    </div>
+
+    <!-- DAY PLAN -->
+    <div class="section-title cebu-accent">🗓 Day-by-day plan</div>
+
+    <div class="day-plan">
+      <div class="dp-row">
+        <div class="dp-day">Jun 14 eve</div>
+        <div class="dp-content">Land 5 PM. Grab to Airbnb (~40 min). Shower, drop bags. Lechon dinner at Rico's or Zubuchon. Walk to Sugbo Mercado night market in IT Park.<div class="dp-sub">First impression: Cebu is a proper city — very different from Palawan's island pace.</div></div>
+      </div>
+      <div class="dp-row">
+        <div class="dp-day">Jun 15 AM</div>
+        <div class="dp-content">9 AM: Grab to downtown. Magellan's Cross + Basilica del Santo Niño + Fort San Pedro. ~2.5h. Lunch at Larsian BBQ (Fuente Osmeña). Back to IT Park area by 1:30 PM.<div class="dp-sub">Downtown to Fuente to IT Park is a logical Grab loop — no backtracking.</div></div>
+      </div>
+      <div class="dp-row">
+        <div class="dp-day">Jun 15 PM</div>
+        <div class="dp-content">Ayala Center Cebu — shopping for Pooja (2–3h). Shridhar: café in IT Park or explore independently. Grab to Tops Lookout by 5 PM. Sunset drinks at the hilltop. Dinner back in IT Park.<div class="dp-sub">Optional: Temple of Leah on the way up to Tops — same Grab route.</div></div>
+      </div>
+      <div class="dp-row">
+        <div class="dp-day">Jun 15 night</div>
+        <div class="dp-content">Last night of the trip. IT Park clubs or Mango Avenue bar hop. LIV Superclub if they want a big night — one of the best clubs in the Philippines. Flight home is Jun 16 at 12:55 PM — no early wake-up, full flexibility to go big tonight.<div class="dp-sub">Leave hotel by ~10:30 AM Jun 16. Airport is on Mactan Island — 30–45 min from IT Park. Book Grab the night before.</div></div>
+      </div>
+      <div class="dp-row">
+        <div class="dp-day">Jun 16 AM</div>
+        <div class="dp-content">Final morning. Slow coffee in IT Park, pack up, check out. Grab to Mactan-Cebu airport by 10:30 AM. Last pasalubong run at the airport — dried mango, otap, rattan goods airside.<div class="dp-sub">Z2 7114 dep 12:55 PM → KUL 4:45 PM · 4h 40m layover · AK 69 dep 9:25 PM → HYD 11:15 PM. Trip done. 🏠</div></div>
+      </div>
+    </div>
+
+    <!-- HOMEWARD FLIGHT NOTE -->
+    <div class="section-title cebu-accent">✈ Flying home — Cebu to Hyderabad</div>
+
+    <div class="flight-card cebu-flight-card">
+      <div class="flight-route">
+        <div class="flight-stop"><div class="code cebu-code">CEB</div><div class="time">12:55 PM</div><div class="city">Mactan-Cebu International</div></div>
+        <div class="flight-line">
+          <div class="airline">Philippines AirAsia · Z2 7114 · A320</div>
+          <div class="line line-cebu"><span class="plane">✈</span></div>
+          <div class="dur">3h 50m</div>
+        </div>
+        <div class="flight-stop"><div class="code cebu-code">KUL</div><div class="time">4:45 PM</div><div class="city">Kuala Lumpur (KLIA2)</div></div>
+      </div>
+      <div class="layover-badge" style="border-color:rgba(217,119,6,0.3);background:rgba(254,243,199,0.6);color:#92400e">⏱ 4h 40m layover at KUL · comfortable · time for a meal airside</div>
+      <div class="flight-route" style="margin-top:14px">
+        <div class="flight-stop"><div class="code cebu-code">KUL</div><div class="time">9:25 PM</div><div class="city">Kuala Lumpur (KLIA2)</div></div>
+        <div class="flight-line">
+          <div class="airline">AirAsia · AK 69 · A320</div>
+          <div class="line line-cebu"><span class="plane">✈</span></div>
+          <div class="dur">4h 20m</div>
+        </div>
+        <div class="flight-stop"><div class="code cebu-code">HYD</div><div class="time">11:15 PM</div><div class="city">Rajiv Gandhi Intl (Hyderabad)</div></div>
+      </div>
+      <div class="flight-tags" style="margin-top:10px">
+        <span class="ftag ftag-amber">Tue Jun 16 · Philippines AirAsia + AirAsia</span>
+        <span class="ftag ftag-amber">₹21,936 / person</span>
+        <span class="ftag ftag-blue">Economy · A320 both legs</span>
+        <span class="ftag ftag-green">12:55 PM departure → relaxed Jun 16 morning ✓</span>
+      </div>
+    </div>
+
+    <!-- BUDGET -->
+    <div class="section-title cebu-accent">💰 Budget estimate — Cebu (1.5 days)</div>
+
+    <div class="budget-card" style="background:linear-gradient(135deg,rgba(217,119,6,0.08),rgba(251,191,36,0.05));border:1.5px solid rgba(217,119,6,0.18)">
+      <div class="budget-row"><span class="budget-cat">USU → CEB flight (Sunlight Air 2R 852)</span><span class="budget-amt">₹7,766 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Airbnb — 1 night (TBC by agent)</span><span class="budget-amt">₱3,000–7,000 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Food — 3 meals + Sugbo Mercado</span><span class="budget-amt">₱1,500–2,500 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Grab rides (airport + 6–8 trips)</span><span class="budget-amt">₱800–1,200 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Tops Lookout (entry + Grab)</span><span class="budget-amt">₱400 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Historic downtown sites</span><span class="budget-amt">₱30–100 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Nightlife (cover + drinks)</span><span class="budget-amt">₱1,500–3,000 <span class="budget-note">each</span></span></div>
+      <div class="budget-row"><span class="budget-cat">Shopping — Pooja</span><span class="budget-amt">Budget as needed</span></div>
+      <div class="budget-row"><span class="budget-cat">Return flight — CEB → KUL → HYD (Jun 16)</span><span class="budget-amt">₹21,936 <span class="budget-note">each</span></span></div>
+      <div class="budget-row total" style="background:rgba(217,119,6,0.09)"><span class="budget-cat">Total per person (excl. Airbnb + shopping)</span><span class="budget-amt">≈ ₱4,230–7,200 + ₹29,702 flights <span class="budget-note">~₹32,000–34,000 all in</span></span></div>
+    </div>
+
+    <!-- TIPS -->
+    <div class="section-title cebu-accent">💡 Tips</div>
+    <div class="tips-grid">
+      <div class="tip-card"><strong>Grab everywhere, always</strong>Cebu has Grab — unlike anywhere else on this trip (except Manila). Use it for every journey. Street taxis exist but metering is inconsistent. Grab is safe, trackable, and often cheaper.</div>
+      <div class="tip-card"><strong>Lechon — order ahead</strong>Rico's and Zubuchon can sell out by evening, especially on weekends. Call ahead or go early. A whole lechon is for groups — order by the kilo (₱500–700/kg). Get crispy skin.</div>
+      <div class="tip-card"><strong>Go early to Tops</strong>Leave IT Park by 4:30 PM for Tops — the Grab up the hill takes 20–30 min. Arrive before 5:30 PM for golden hour. Sunset is the payoff; clouds usually clear by late afternoon in June.</div>
+      <div class="tip-card"><strong>Airport is on Mactan Island</strong>Not in the city — it's a bridge crossing away (~30–45 min from IT Park). For the return flight, leave your Airbnb with 2.5h buffer minimum. Book Grab the night before for early departures.</div>
+      <div class="tip-card"><strong>Jun 16 morning — relaxed checkout</strong>Flight is 12:55 PM. Leave the hotel by 10:30 AM max — airport is 30–45 min from IT Park via Grab (Mactan Island, bridge crossing). Book Grab the night before so you're not scrambling. Arrive by 11:30 AM for check-in.</div>
+      <div class="tip-card"><strong>Dried mango at the airport</strong>Cebu airport has good pasalubong shops airside. If Pooja runs out of shopping time in the city, the airport is a solid backup for dried mango, otap, and local snacks. Buy after check-in.</div>
+    </div>
+
+  </div>
+
+  <div class="footer-nav">
+    <button class="nav-btn btn-prev" onclick="showPage('coron')">← Coron</button>
+    <button class="nav-btn" style="background:linear-gradient(135deg,#10b981,#34d399);color:white;box-shadow:0 4px 20px rgba(16,185,129,0.4)" onclick="showPage('checklist')">✅ Checklist →</button>
+  </div>
+</div>
+
+
+<!-- ============================================================ CHECKLIST PAGE -->
+<div class="page" id="page-checklist">
+  <div class="hero" style="background:linear-gradient(135deg,#064e3b 0%,#065f46 40%,#047857 70%,#059669 100%);border-radius:0 0 28px 28px">
+    <div class="hero-eyebrow" style="color:rgba(167,243,208,0.9)">Jun 6–16 · 10 nights</div>
+    <h1 class="hero-title" style="color:white">Pre-trip Checklist</h1>
+    <p class="hero-sub" style="color:rgba(167,243,208,0.85)">Everything to sort before June 6. Tick it off. Board the flight stress-free.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="icon">✈</span><div><span class="hero-stat-val" id="stat-flights">6</span><span class="hero-stat-lbl">Flights</span></div></div>
+      <div class="hero-stat"><span class="icon">🏨</span><div><span class="hero-stat-val">5</span><span class="hero-stat-lbl">Cities</span></div></div>
+      <div class="hero-stat"><span class="icon">📋</span><div><span class="hero-stat-val" id="stat-done">0</span><span class="hero-stat-lbl">Ticked off</span></div></div>
+      <div class="hero-stat"><span class="icon">⏳</span><div><span class="hero-stat-val" id="stat-left">—</span><span class="hero-stat-lbl">Still to do</span></div></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- PROGRESS BAR -->
+    <div style="margin-bottom:24px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:#065f46">Trip readiness</div>
+        <div id="progress-label" style="font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:#059669">0% complete</div>
+      </div>
+      <div style="height:10px;background:rgba(16,185,129,0.15);border-radius:99px;overflow:hidden">
+        <div id="progress-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#059669,#34d399);border-radius:99px;transition:width 0.4s ease"></div>
+      </div>
+    </div>
+
+    <!-- SECTION: BOOKINGS (CRITICAL) -->
+    <div class="section-title" style="color:#065f46;border-bottom-color:rgba(5,150,105,0.2)">🎯 Bookings — must be done NOW</div>
+
+    <div class="cl-group">
+
+      <div class="cl-item" data-id="c1">
+        <div class="cl-check" onclick="toggleCheck('c1')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Underground River permit — TOP ACE via GetYourGuide</div>
+          <div class="cl-sub">Jun 9 · ★4.4 · ₹4,663/pax · all-inclusive (permit, transfers, lunch, audio guide) · free cancellation 24h · 900 visitor/day cap — books out. Book from India, 2–3 week processing. <a href="https://www.getyourguide.com/puerto-princesa-l1000/puerto-princesa-underground-river-tour-t627422/" target="_blank" style="color:#059669;font-weight:700">Book on GetYourGuide ↗</a></div>
+          <div class="cl-tags"><span class="clt clt-red">🔥 Most urgent</span><span class="clt clt-green">Free cancellation</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="c2">
+        <div class="cl-check" onclick="toggleCheck('c2')"></div>
+        <div class="cl-body">
+          <div class="cl-title">El Nido → Coron fast ferry — Atienza or Montenegro Lines</div>
+          <div class="cl-sub">Jun 12 · dep 12:30 PM · 4–5h · ₱2,500–2,800/pax. Book via <a href="https://travel-palawan.com" target="_blank" style="color:#059669;font-weight:700">travel-palawan.com ↗</a> or Klook. Only one morning departure — fills up fast in June.</div>
+          <div class="cl-tags"><span class="clt clt-red">Urgent</span><span class="clt clt-blue">Jun 12 · 12:30 PM</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="c3">
+        <div class="cl-check" onclick="toggleCheck('c3')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Sunlight Air 2R 852 — Busuanga (Coron) → Cebu</div>
+          <div class="cl-sub">Fri Jun 14 · dep 3:00 PM USU → arr 5:00 PM CEB · ₹7,766/pax · Economy. Only ~6 flights/day on this route across all operators — book immediately. Check Sunlight Air website or Klook.</div>
+          <div class="cl-tags"><span class="clt clt-red">Urgent</span><span class="clt clt-blue">Jun 14 · 3:00 PM</span><span class="clt clt-green">₹7,766/pax</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="c4">
+        <div class="cl-check" onclick="toggleCheck('c4')"></div>
+        <div class="cl-body">
+          <div class="cl-title">PP → El Nido van — El Nido Paradise Tours or Diskubre</div>
+          <div class="cl-sub">Jun 9 · depart ~3:30–4 PM · arr ~9 PM Corong Corong. Private (El Nido Paradise Tours): ₱8,000 total, ₱2,500 deposit online. Shared (Klook): ₱700/pax. Book same session as Underground River.</div>
+          <div class="cl-tags"><span class="clt clt-orange">Book soon</span><span class="clt clt-blue">Jun 9 · ~3:30 PM</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="c5">
+        <div class="cl-check" onclick="toggleCheck('c5')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Coron Airbnb — Jun 12–14 (2 nights)</div>
+          <div class="cl-sub">Top picks: Whole Comfort House ★4.93 (2-night availability confirmed, ₹6,708 total) or Nomad Yurts 8 ★4.94 (check 2-night extension). <a href="https://www.airbnb.co.in/wishlists/invite/7793a051-c14f-4543-96fa-1875525f7a02" target="_blank" style="color:#059669;font-weight:700">View Coron wishlist ↗</a></div>
+          <div class="cl-tags"><span class="clt clt-orange">Book soon</span><span class="clt clt-blue">Jun 12–14 · 2 nights</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="c6">
+        <div class="cl-check" onclick="toggleCheck('c6')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Cebu Airbnb — Jun 14–15 (1 night)</div>
+          <div class="cl-sub">Top picks: Spacious City-View Mabolo ★5.0 (₹4,779) or AVIDA Riala IT Park 31F ★4.99 (₹4,741). <a href="https://www.airbnb.co.in/wishlists/invite/84513ebc-79e0-4eab-b023-085f681209ca" target="_blank" style="color:#059669;font-weight:700">View Cebu wishlist ↗</a></div>
+          <div class="cl-tags"><span class="clt clt-orange">Book soon</span><span class="clt clt-blue">Jun 14–15 · 1 night</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION: FLIGHTS BOOKED -->
+    <div class="section-title" style="color:#065f46;border-bottom-color:rgba(5,150,105,0.2)">✈ Flights — confirm all are booked</div>
+    <div class="cl-group">
+
+      <div class="cl-item" data-id="f1">
+        <div class="cl-check" onclick="toggleCheck('f1')"></div>
+        <div class="cl-body">
+          <div class="cl-title">HYD → KUL → MNL — AirAsia AK68 + AK582</div>
+          <div class="cl-sub">Sat Jun 6 · dep HYD 11:55 PM → KUL 7:00 AM (1h 20m layover) → MNL 12:15 PM Jun 7 · ₹16,508/pax · Goibibo</div>
+          <div class="cl-tags"><span class="clt clt-green">Booked ✓</span><span class="clt clt-blue">Jun 6 · 11:55 PM</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="f2">
+        <div class="cl-check" onclick="toggleCheck('f2')"></div>
+        <div class="cl-body">
+          <div class="cl-title">MNL → PPS — Philippine Airlines PR 2779</div>
+          <div class="cl-sub">Mon Jun 8 · dep MNL 7:25 PM → arr PPS 8:45 PM · ₹4,870/pax · 1 free checked bag included</div>
+          <div class="cl-tags"><span class="clt clt-green">Booked ✓</span><span class="clt clt-blue">Jun 8 · 7:25 PM</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="f3">
+        <div class="cl-check" onclick="toggleCheck('f3')"></div>
+        <div class="cl-body">
+          <div class="cl-title">USU → CEB — Sunlight Air 2R 852</div>
+          <div class="cl-sub">Fri Jun 14 · dep 3:00 PM → arr 5:00 PM · ₹7,766/pax · confirm booking reference received</div>
+          <div class="cl-tags"><span class="clt clt-orange">Needs booking (see above)</span><span class="clt clt-blue">Jun 14 · 3:00 PM</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="f4">
+        <div class="cl-check" onclick="toggleCheck('f4')"></div>
+        <div class="cl-body">
+          <div class="cl-title">CEB → KUL → HYD — Philippines AirAsia Z2 7114 + AirAsia AK 69</div>
+          <div class="cl-sub">Tue Jun 16 · dep CEB 12:55 PM → KUL 4:45 PM (4h 40m layover) → HYD 11:15 PM · ₹21,936/pax · confirm booking</div>
+          <div class="cl-tags"><span class="clt clt-green">Identified ✓</span><span class="clt clt-blue">Jun 16 · 12:55 PM</span><span class="clt clt-orange">Confirm booked</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION: VISA & ENTRY -->
+    <div class="section-title" style="color:#065f46;border-bottom-color:rgba(5,150,105,0.2)">🛂 Visa & entry</div>
+    <div class="cl-group">
+
+      <div class="cl-item" data-id="v1">
+        <div class="cl-check" onclick="toggleCheck('v1')"></div>
+        <div class="cl-body">
+          <div class="cl-title">eTravel registration — both travellers</div>
+          <div class="cl-sub">Register on <a href="https://etravel.gov.ph" target="_blank" style="color:#059669;font-weight:700">etravel.gov.ph ↗</a> within 72h of arrival. Indian passports are visa-free for 14 days from Jun 8. Carry the eTravel QR code on your phone — immigration may ask for it. Free, takes 5 minutes.</div>
+          <div class="cl-tags"><span class="clt clt-orange">Do 72h before flying</span><span class="clt clt-green">Visa-free ✓</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="v2">
+        <div class="cl-check" onclick="toggleCheck('v2')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Carry confirmed return/onward ticket at Manila immigration</div>
+          <div class="cl-sub">Immigration officers may ask for proof you're leaving the Philippines. Have the CEB→KUL→HYD booking (Jun 16) pulled up on your phone or printed. Also keep Airbnb confirmations accessible.</div>
+          <div class="cl-tags"><span class="clt clt-blue">Manila arrival check</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="v3">
+        <div class="cl-check" onclick="toggleCheck('v3')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Passport validity check — both travellers</div>
+          <div class="cl-sub">Passport must be valid for at least 6 months beyond Jun 16 (i.e. valid until at least Dec 16, 2026). Check both passports right now.</div>
+          <div class="cl-tags"><span class="clt clt-red">Check immediately</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION: MONEY -->
+    <div class="section-title" style="color:#065f46;border-bottom-color:rgba(5,150,105,0.2)">💵 Money & payments</div>
+    <div class="cl-group">
+
+      <div class="cl-item" data-id="m1">
+        <div class="cl-check" onclick="toggleCheck('m1')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Carry Philippine Pesos in cash — withdraw on arrival</div>
+          <div class="cl-sub">Best rate: withdraw PHP from ATMs inside NAIA (Metrobank, BDO). Exchange rate is decent and fees are low. Target: ₱20,000–25,000 each to start (covers Manila + PP). Coron is especially cash-heavy — top up there. Don't rely on UPI or Indian cards everywhere.</div>
+          <div class="cl-tags"><span class="clt clt-orange">Withdraw at NAIA on arrival</span><span class="clt clt-blue">ATMs: Metrobank, BDO best</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="m2">
+        <div class="cl-check" onclick="toggleCheck('m2')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Notify your Indian bank/card about international travel</div>
+          <div class="cl-sub">Call or app-notify HDFC/ICICI/SBI that you're travelling Jun 6–16. Prevents fraud blocks mid-trip. Enable international transactions on your debit card if not already done. Carry 2 different cards as backup.</div>
+          <div class="cl-tags"><span class="clt clt-orange">Do before Jun 6</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="m3">
+        <div class="cl-check" onclick="toggleCheck('m3')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Cash reserves per leg</div>
+          <div class="cl-sub">Manila: ₱5,000–8,000 each (nightlife + food + taxis). PP: ₱2,000 (mostly booked). El Nido: ₱8,000–12,000 (tours, food, scooters, bars). Coron: ₱6,000–8,000 (island hop, food, tricycles — very cash-heavy). Cebu: ₱5,000–8,000 (Grab, lechon, nightlife, shopping). Total: ~₱26,000–38,000/person across the trip.</div>
+          <div class="cl-tags"><span class="clt clt-blue">~₱30,000–40,000 total budget for cash</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="m4">
+        <div class="cl-check" onclick="toggleCheck('m4')"></div>
+        <div class="cl-body">
+          <div class="cl-title">El Nido eco-fee — ₱400/person — pay on Day 1</div>
+          <div class="cl-sub">One-time fee covers all island hopping tours (A, B, C, D) for the entire stay. Pay in cash at El Nido pier on the morning of your first tour. Don't pay each day separately — you'll be overcharged.</div>
+          <div class="cl-tags"><span class="clt clt-blue">Pay Jun 10 morning</span><span class="clt clt-green">₱800 total for 2</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION: CONNECTIVITY -->
+    <div class="section-title" style="color:#065f46;border-bottom-color:rgba(5,150,105,0.2)">📱 Connectivity</div>
+    <div class="cl-group">
+
+      <div class="cl-item" data-id="cn1">
+        <div class="cl-check" onclick="toggleCheck('cn1')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Get Philippine SIM at NAIA arrivals — Globe or Smart</div>
+          <div class="cl-sub">Available inside NAIA arrivals hall immediately after customs. ₱300–499 for 10–15 days unlimited data. Activate before you leave the airport — you need Grab to get to BGC. Globe has better coverage in Metro Manila; Smart is better in Palawan and rural areas. Consider getting one each (Globe + Smart) to cover all bases.</div>
+          <div class="cl-tags"><span class="clt clt-orange">First thing at NAIA</span><span class="clt clt-blue">Globe (Manila) · Smart (Palawan)</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="cn2">
+        <div class="cl-check" onclick="toggleCheck('cn2')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Download offline maps — Google Maps Philippines</div>
+          <div class="cl-sub">Download offline maps for: Metro Manila, Palawan (PP + El Nido), Coron/Busuanga, Cebu City. Mobile data can be spotty in El Nido and on ferry crossings. Grab also works offline for fare estimates.</div>
+          <div class="cl-tags"><span class="clt clt-blue">Download before flying</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="cn3">
+        <div class="cl-check" onclick="toggleCheck('cn3')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Install: Grab, Klook, GetYourGuide, Airbnb, Google Translate (Filipino)</div>
+          <div class="cl-sub">Grab = essential everywhere. Klook for last-minute tour bookings. GetYourGuide for Underground River confirmation. Google Translate Filipino pack for offline use in markets and local areas.</div>
+          <div class="cl-tags"><span class="clt clt-blue">Install before flying</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION: DOCUMENTS -->
+    <div class="section-title" style="color:#065f46;border-bottom-color:rgba(5,150,105,0.2)">📄 Documents to carry</div>
+    <div class="cl-group">
+
+      <div class="cl-item" data-id="d1">
+        <div class="cl-check" onclick="toggleCheck('d1')"></div>
+        <div class="cl-body">
+          <div class="cl-title">All flight e-tickets printed or saved offline</div>
+          <div class="cl-sub">AK68 + AK582 (outbound) · PR 2779 (MNL→PPS) · 2R 852 (USU→CEB) · Z2 7114 + AK 69 (return). Save PDFs in Google Drive and screenshot all for offline access.</div>
+          <div class="cl-tags"><span class="clt clt-blue">Save offline + print backups</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="d2">
+        <div class="cl-check" onclick="toggleCheck('d2')"></div>
+        <div class="cl-body">
+          <div class="cl-title">All Airbnb confirmations — saved/accessible offline</div>
+          <div class="cl-sub">Manila, Puerto Princesa, El Nido, Coron, Cebu. Screenshot each booking with check-in instructions and host contact number. Particularly important for El Nido and Coron where connectivity can drop.</div>
+          <div class="cl-tags"><span class="clt clt-blue">Screenshot all confirmations</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="d3">
+        <div class="cl-check" onclick="toggleCheck('d3')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Underground River booking confirmation + QR code</div>
+          <div class="cl-sub">The GetYourGuide confirmation acts as your permit. Screenshot the QR code. The tour guide will check it at hotel pickup. Without it, no entry — the 900/day quota is strict.</div>
+          <div class="cl-tags"><span class="clt clt-red">Critical — don't lose this</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="d4">
+        <div class="cl-check" onclick="toggleCheck('d4')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Travel insurance — both travellers</div>
+          <div class="cl-sub">Strongly recommended for a multi-island trip involving ferry crossings, island hopping, and water sports. Covers: medical evacuation (El Nido has no hospital — Coron has one), trip cancellation, lost baggage, adventure sports. PolicyBazaar, Tata AIG, or HDFC ERGO have good international plans at ₹800–2,000/person.</div>
+          <div class="cl-tags"><span class="clt clt-orange">Strongly recommended</span><span class="clt clt-blue">Include water sports cover</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION: PACKING -->
+    <div class="section-title" style="color:#065f46;border-bottom-color:rgba(5,150,105,0.2)">🎒 Packing — what actually matters</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+
+      <div style="background:rgba(209,250,229,0.4);border:1.5px solid rgba(16,185,129,0.2);border-radius:16px;padding:14px">
+        <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:#065f46;margin-bottom:10px">🌊 Water & beach essentials</div>
+        <div class="cl-item" data-id="p1" style="border-bottom:none;padding-bottom:4px"><div class="cl-check sm" onclick="toggleCheck('p1')"></div><div class="cl-body"><div class="cl-title sm">Rash guard / swim shirt</div><div class="cl-sub">Long-sleeve rash guard — sun protection on island hopping is critical. 6 hrs on open water in June sun will burn. Lighter than sunscreen reapplication.</div></div></div>
+        <div class="cl-item" data-id="p2" style="border-bottom:none;padding-bottom:4px"><div class="cl-check sm" onclick="toggleCheck('p2')"></div><div class="cl-body"><div class="cl-title sm">Reef-safe sunscreen (SPF 50+)</div><div class="cl-sub">Non-negotiable. Philippine parks increasingly enforce reef-safe only. Bring from India — expensive locally and hard to find the right kind.</div></div></div>
+        <div class="cl-item" data-id="p3" style="border-bottom:none;padding-bottom:4px"><div class="cl-check sm" onclick="toggleCheck('p3')"></div><div class="cl-body"><div class="cl-title sm">Snorkel mask + fins (optional)</div><div class="cl-sub">Tours provide basic snorkels but quality varies. If either of you has a prescription or comfort preferences, bring your own. Fins are usually provided.</div></div></div>
+        <div class="cl-item" data-id="p4" style="border-bottom:none;padding-bottom:4px"><div class="cl-check sm" onclick="toggleCheck('p4')"></div><div class="cl-body"><div class="cl-title sm">Dry bag (10–20L)</div><div class="cl-sub">Essential for island hopping — boat spray, lagoon entries, and pump boat crossings will wet everything. One good dry bag protects phones, passports, cash.</div></div></div>
+        <div class="cl-item" data-id="p5" style="border-bottom:none;padding-bottom:4px"><div class="cl-check sm" onclick="toggleCheck('p5')"></div><div class="cl-body"><div class="cl-title sm">Water shoes / reef sandals</div><div class="cl-sub">Lagoon entries, rocky shores, reef walks. Havaianas-style flip flops won't cut it in El Nido and Coron. Water shoes or Tevas are ideal.</div></div></div>
+        <div class="cl-item" data-id="p6" style="border-bottom:none"><div class="cl-check sm" onclick="toggleCheck('p6')"></div><div class="cl-body"><div class="cl-title sm">2–3 swimsuits each</div><div class="cl-sub">Washing in the sink every night gets old fast when you're island hopping 3 days in a row. Dry quickly in tropical heat but pack enough to rotate.</div></div></div>
+      </div>
+
+      <div style="background:rgba(224,242,254,0.4);border:1.5px solid rgba(14,165,233,0.2);border-radius:16px;padding:14px">
+        <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:#0369a1;margin-bottom:10px">🎽 Clothes & nightlife</div>
+        <div class="cl-item" data-id="p7" style="border-bottom:none;padding-bottom:4px"><div class="cl-check sm" onclick="toggleCheck('p7')"></div><div class="cl-body"><div class="cl-title sm">Smart casual for Manila nightlife</div><div class="cl-sub">The Palace (Xylo/The Island) enforces smart casual — no slippers, no sleeveless shirts for men. One collared shirt + chinos at minimum. Pooja: no beachwear inside.</div></div></div>
+        <div class="cl-item" data-id="p8" style="border-bottom:none;padding-bottom:4px"><div class="cl-check sm" onclick="toggleCheck('p8')"></div><div class="cl-body"><div class="cl-title sm">Light breathable clothing (4–5 outfits)</div><div class="cl-sub">June in the Philippines is hot, humid, and occasionally rainy. Linen or moisture-wicking fabrics. Dark colours hide sweat. Pack light — you'll be island-hopping with a day bag most of the time.</div></div></div>
+        <div class="cl-item" data-id="p9" style="border-bottom:none;padding-bottom:4px"><div class="cl-check sm" onclick="toggleCheck('p9')"></div><div class="cl-body"><div class="cl-title sm">1 compact rain jacket / packable poncho</div><div class="cl-sub">June = wet season start. Short afternoon showers are common. A packable jacket doubles as windcheater on ferry decks. Don't bring an umbrella — useless in island wind.</div></div></div>
+        <div class="cl-item" data-id="p10" style="border-bottom:none"><div class="cl-check sm" onclick="toggleCheck('p10')"></div><div class="cl-body"><div class="cl-title sm">Comfortable walking shoes + sandals</div><div class="cl-sub">Manila (Intramuros cobblestones), Mt. Tapyas (723 steps), Cebu downtown. One pair of trainers or comfortable sneakers. Reef sandals can double as evening casual in El Nido.</div></div></div>
+      </div>
+
+      <div style="background:rgba(254,243,199,0.4);border:1.5px solid rgba(245,158,11,0.2);border-radius:16px;padding:14px">
+        <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:#92400e;margin-bottom:10px">🔋 Tech & gadgets</div>
+        <div class="cl-item" data-id="p11" style="border-bottom:none;padding-bottom:4px"><div class="cl-check sm" onclick="toggleCheck('p11')"></div><div class="cl-body"><div class="cl-title sm">Universal travel adapter (Philippines: US Type A/B)</div><div class="cl-sub">Philippines uses US-style flat 2-pin plugs. Most Indian devices (Type D/M) won't fit without an adapter. Grab a universal adapter — hotels in El Nido and Coron may not have spares.</div></div></div>
+        <div class="cl-item" data-id="p12" style="border-bottom:none;padding-bottom:4px"><div class="cl-check sm" onclick="toggleCheck('p12')"></div><div class="cl-body"><div class="cl-title sm">Power bank (20,000 mAh)</div><div class="cl-sub">Island hopping days are 8h+ with no charging. Coron guesthouses can be rustic. A high-capacity power bank keeps phones alive through long ferry days and late nights out.</div></div></div>
+        <div class="cl-item" data-id="p13" style="border-bottom:none;padding-bottom:4px"><div class="cl-check sm" onclick="toggleCheck('p13')"></div><div class="cl-body"><div class="cl-title sm">Waterproof phone case / pouch</div><div class="cl-sub">For the Big Lagoon kayak, Twin Lagoon swim-through, Barracuda cliff jump, and any pump boat crossing in rain. A cheap waterproof lanyard pouch (₹300 on Amazon) will do the job.</div></div></div>
+        <div class="cl-item" data-id="p14" style="border-bottom:none"><div class="cl-check sm" onclick="toggleCheck('p14')"></div><div class="cl-body"><div class="cl-title sm">Action camera or GoPro (optional)</div><div class="cl-sub">El Nido lagoons, Coron wrecks, Barracuda thermocline. If either of you has one, bring it — you'll regret not having underwater shots. Tours don't offer photographer services in most stops.</div></div></div>
+      </div>
+
+      <div style="background:rgba(252,231,243,0.4);border:1.5px solid rgba(219,39,119,0.2);border-radius:16px;padding:14px">
+        <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:#9d174d;margin-bottom:10px">💊 Health & safety</div>
+        <div class="cl-item" data-id="p15" style="border-bottom:none;padding-bottom:4px"><div class="cl-check sm" onclick="toggleCheck('p15')"></div><div class="cl-body"><div class="cl-title sm">Motion sickness tablets</div><div class="cl-sub">Fast ferries (El Nido → Coron, 4–5h) can be rough in June swell. Island hopping pump boats too. Take Avomine or Stugeron 30 min before any sea crossing if prone.</div></div></div>
+        <div class="cl-item" data-id="p16" style="border-bottom:none;padding-bottom:4px"><div class="cl-check sm" onclick="toggleCheck('p16')"></div><div class="cl-body"><div class="cl-title sm">Basic medical kit</div><div class="cl-sub">Paracetamol, ORS sachets, antiseptic cream, band-aids, antacid, anti-diarrhoeal (Imodium). El Nido has no hospital — nearest is in Puerto Princesa. A well-stocked kit is not optional here.</div></div></div>
+        <div class="cl-item" data-id="p17" style="border-bottom:none;padding-bottom:4px"><div class="cl-check sm" onclick="toggleCheck('p17')"></div><div class="cl-body"><div class="cl-title sm">Mosquito repellent (DEET 30%+)</div><div class="cl-sub">Evening in El Nido and Coron Town has mosquitoes, especially after rain. Dengue is present in the Philippines. Long sleeves + repellent after sunset. Odomos or Repel 100 from India.</div></div></div>
+        <div class="cl-item" data-id="p18" style="border-bottom:none"><div class="cl-check sm" onclick="toggleCheck('p18')"></div><div class="cl-body"><div class="cl-title sm">After-sun / aloe vera gel</div><div class="cl-sub">You will get some sun regardless of how much you apply. Aloe vera gel takes up almost no space and provides significant relief after back-to-back days on the water.</div></div></div>
+      </div>
+
+    </div>
+
+    <!-- SECTION: FINAL CHECKS -->
+    <div class="section-title" style="color:#065f46;border-bottom-color:rgba(5,150,105,0.2)">🏁 Final checks — 48h before flying</div>
+    <div class="cl-group">
+
+      <div class="cl-item" data-id="fc1">
+        <div class="cl-check" onclick="toggleCheck('fc1')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Check in online — AirAsia AK68 (opens 14 days before)</div>
+          <div class="cl-sub">AirAsia allows online check-in 14 days before departure. Check in for both AK68 and AK582 in the same session. Select seats, confirm baggage. Saves time at HYD airport for a late-night departure.</div>
+          <div class="cl-tags"><span class="clt clt-blue">Opens May 23</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="fc2">
+        <div class="cl-check" onclick="toggleCheck('fc2')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Confirm all Airbnb check-in times with hosts</div>
+          <div class="cl-sub">Message all hosts 48h before arrival: Manila (Sun Jun 7, ~1 PM), PP (Mon Jun 8, ~9 PM), El Nido (Tue Jun 9, ~9:30 PM), Coron (Thu Jun 12, ~5 PM), Cebu (Sun Jun 14, ~6 PM). Late arrivals in El Nido and Coron need host coordination for key handover.</div>
+          <div class="cl-tags"><span class="clt clt-orange">Message all hosts 48h ahead</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="fc3">
+        <div class="cl-check" onclick="toggleCheck('fc3')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Share full itinerary with someone at home</div>
+          <div class="cl-sub">Send the full trip plan — flight numbers, dates, accommodation details, and emergency contacts — to a family member or friend in India. Include the tour operator contacts for El Nido and Coron. Standard travel safety practice, especially for remote island itineraries.</div>
+          <div class="cl-tags"><span class="clt clt-blue">Safety standard</span></div>
+        </div>
+      </div>
+
+      <div class="cl-item" data-id="fc4">
+        <div class="cl-check" onclick="toggleCheck('fc4')"></div>
+        <div class="cl-body">
+          <div class="cl-title">Save this site offline / export PDF</div>
+          <div class="cl-sub">WiFi in El Nido and Coron can be unreliable. Download or screenshot each city page before flying. The entire plan — flights, stays, activities, day plans, budgets — is here. Don't rely on cloud access mid-trip.</div>
+          <div class="cl-tags"><span class="clt clt-blue">Save before Jun 6</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FINAL NOTE -->
+    <div style="background:linear-gradient(135deg,rgba(6,78,59,0.08),rgba(16,185,129,0.05));border:1.5px solid rgba(16,185,129,0.2);border-radius:18px;padding:20px;margin-top:8px;text-align:center">
+      <div style="font-size:28px;margin-bottom:8px">🌴</div>
+      <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;color:#065f46;margin-bottom:6px">That's the whole plan. 10 nights. 5 islands. One trip.</div>
+      <div style="font-size:13px;color:var(--text-soft);line-height:1.6">Manila nightlife → Palawan caves → El Nido lagoons → Coron wrecks → Cebu lechon.<br>Tick off this list and you're good to go. Have an incredible trip, Shridhar & Pooja. 🤙</div>
+      <button onclick="showPage('home')" style="margin-top:14px;background:linear-gradient(135deg,#059669,#34d399);color:white;border:none;border-radius:99px;padding:10px 24px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 4px 16px rgba(16,185,129,0.35)">← Back to trip overview</button>
+    </div>
+
+  </div>
+
+  <div class="footer-nav">
+    <button class="nav-btn btn-prev" onclick="showPage('cebu')">← Cebu</button>
+    <button class="nav-btn" style="background:linear-gradient(135deg,#059669,#34d399);color:white;box-shadow:0 4px 20px rgba(16,185,129,0.4)" onclick="showPage('home')">🏠 Home</button>
+  </div>
+</div>
+
+<script>
+/* ---- CHECKLIST LOGIC ---- */
+const checked = new Set();
+const allIds = ['c1','c2','c3','c4','c5','c6','f1','f2','f3','f4','v1','v2','v3','m1','m2','m3','m4','cn1','cn2','cn3','d1','d2','d3','d4','p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12','p13','p14','p15','p16','p17','p18','fc1','fc2','fc3','fc4'];
+function toggleCheck(id) {
+  const item = document.querySelector('[data-id="'+id+'"]');
+  const box = item.querySelector('.cl-check');
+  if(checked.has(id)) {
+    checked.delete(id);
+    item.classList.remove('cl-done');
+    box.innerHTML = '';
+  } else {
+    checked.add(id);
+    item.classList.add('cl-done');
+    box.innerHTML = '✓';
+  }
+  updateProgress();
+}
+function updateProgress() {
+  const done = checked.size;
+  const total = allIds.length;
+  const pct = Math.round((done/total)*100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = pct + '% complete';
+  document.getElementById('stat-done').textContent = done;
+  document.getElementById('stat-left').textContent = total - done;
+}
+updateProgress();
+
+/* ---- PAGE NAVIGATION ---- */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link:not(.locked)').forEach(n => {
+    n.classList.remove('active-home','active-manila','active-pp','active-elnido','active-coron','active-cebu','active-checklist');
+  });
+  const gradBg = {
+    elnido:'linear-gradient(160deg,#cffafe 0%,#e0f7ff 30%,#f0fbff 60%,#fef9ee 100%)',
+    coron:'linear-gradient(160deg,#fce7f3 0%,#fbcfe8 30%,#f0f9ff 60%,#fef9ee 100%)',
+    cebu:'linear-gradient(160deg,#fef3c7 0%,#fde68a 25%,#f0fbff 60%,#fef9ee 100%)',
+    checklist:'linear-gradient(160deg,#d1fae5 0%,#a7f3d0 25%,#ecfdf5 60%,#f0fdf4 100%)'
+  };
+  const solidBg = {home:'bg-home',manila:'bg-manila',pp:'bg-pp'};
+  if(gradBg[id]){
+    document.body.style.background = gradBg[id];
+    document.body.className = '';
+  } else {
+    document.body.style.background = '';
+    document.body.className = solidBg[id] || 'bg-home';
+  }
+  document.getElementById('page-' + id).classList.add('active');
+  if(id==='manila') document.getElementById('nav-manila').classList.add('active-manila');
+  if(id==='pp') document.getElementById('nav-pp').classList.add('active-pp');
+  if(id==='elnido') document.getElementById('nav-elnido').classList.add('active-elnido');
+  if(id==='coron') document.getElementById('nav-coron').classList.add('active-coron');
+  if(id==='cebu') document.getElementById('nav-cebu').classList.add('active-cebu');
+  if(id==='checklist') document.getElementById('nav-checklist').classList.add('active-checklist');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.getElementById('nav-manila').classList.remove('active-manila','active-pp','active-home','active-elnido','active-coron','active-cebu');
+</script>
+</body>
+</html>
